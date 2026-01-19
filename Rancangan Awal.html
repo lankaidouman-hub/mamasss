@@ -1,0 +1,3759 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program Adiwiyata - SMA Negeri 19 Palembang</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-green: #059669;
+            --secondary-green: #10b981;
+            --light-green: #d1fae5;
+            --dark-green: #064e3b;
+            --accent-green: #34d399;
+            --forest-green: #065f46;
+            --mint-green: #a7f3d0;
+            --emerald: #047857;
+            
+            --primary-blue: #0ea5e9;
+            --light-blue: #e0f2fe;
+            --primary-orange: #f97316;
+            --primary-purple: #8b5cf6;
+            --primary-red: #ef4444;
+            --gold: #f59e0b;
+            
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --white: #ffffff;
+            
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+            
+            --border-radius: 12px;
+            --border-radius-lg: 16px;
+            --border-radius-xl: 20px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 50%, #a7f3d0 100%);
+            min-height: 100vh;
+            color: var(--gray-900);
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        @media (min-width: 768px) {
+            body { font-size: 16px; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        @media (min-width: 640px) {
+            .container { padding: 0 1.5rem; }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .animate-fadeIn { animation: fadeIn 0.6s ease-out; }
+        .animate-slideIn { animation: slideIn 0.5s ease-out; }
+        .animate-bounce { animation: bounce 2s infinite; }
+        .animate-pulse { animation: pulse 2s infinite; }
+        .animate-spin { animation: spin 1s linear infinite; }
+
+        /* Login Styles */
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 50%, var(--accent-green) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        .login-card {
+            background: var(--white);
+            border-radius: var(--border-radius-xl);
+            box-shadow: var(--shadow-xl);
+            padding: 2rem;
+            width: 100%;
+            max-width: 420px;
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(10px);
+        }
+
+        @media (min-width: 640px) {
+            .login-card { padding: 2.5rem; }
+        }
+
+        .school-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--light-green), var(--mint-green));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 10px 25px rgba(5, 150, 105, 0.3);
+            position: relative;
+        }
+
+        @media (min-width: 640px) {
+            .school-logo {
+                width: 100px;
+                height: 100px;
+                margin-bottom: 2rem;
+            }
+        }
+
+        .school-logo::after {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary-green), var(--secondary-green), var(--accent-green));
+            z-index: -1;
+        }
+
+        .school-logo i {
+            font-size: 2.5rem;
+            color: var(--primary-green);
+        }
+
+        @media (min-width: 640px) {
+            .school-logo i { font-size: 3rem; }
+        }
+
+        .login-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        @media (min-width: 640px) {
+            .login-title { font-size: 2rem; }
+        }
+
+        .login-subtitle {
+            color: var(--gray-600);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        @media (min-width: 640px) {
+            .login-subtitle {
+                margin-bottom: 2rem;
+                font-size: 1.1rem;
+            }
+        }
+
+        .school-info {
+            background: linear-gradient(135deg, var(--light-green), var(--mint-green));
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            border-left: 4px solid var(--primary-green);
+            font-size: 0.9rem;
+        }
+
+        @media (min-width: 640px) {
+            .school-info {
+                margin-bottom: 2rem;
+                font-size: 1rem;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            background: var(--gray-50);
+            font-family: inherit;
+        }
+
+        @media (min-width: 640px) {
+            .form-input {
+                padding: 1rem 1.25rem;
+                font-size: 1rem;
+            }
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.1);
+            background: var(--white);
+        }
+
+        .btn {
+            padding: 0.875rem 1.25rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-family: inherit;
+        }
+
+        @media (min-width: 640px) {
+            .btn {
+                padding: 1rem 1.5rem;
+                font-size: 1rem;
+            }
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+            color: var(--white);
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);
+            font-size: 1rem;
+            padding: 1rem;
+        }
+
+        @media (min-width: 640px) {
+            .btn-primary {
+                font-size: 1.1rem;
+                padding: 1.25rem;
+            }
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--secondary-green), var(--emerald));
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(5, 150, 105, 0.4);
+        }
+
+        .error-message {
+            background: #fef2f2;
+            color: var(--primary-red);
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--primary-red);
+            margin-top: 1rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+            color: var(--white);
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 6s ease-in-out infinite;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+            position: relative;
+            z-index: 1;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .header-content {
+                padding: 1.5rem 0;
+                flex-wrap: nowrap;
+            }
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .header-left { gap: 1.5rem; }
+        }
+
+        .header-logo {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 0.75rem;
+            border-radius: var(--border-radius);
+            backdrop-filter: blur(10px);
+        }
+
+        @media (min-width: 768px) {
+            .header-logo { padding: 1rem; }
+        }
+
+        .header-logo i {
+            font-size: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .header-logo i { font-size: 2.5rem; }
+        }
+
+        .header-info h1 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        @media (min-width: 768px) {
+            .header-info h1 { font-size: 1.75rem; }
+        }
+
+        .header-info p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        @media (min-width: 768px) {
+            .header-info p { font-size: 1rem; }
+        }
+
+        .weather-widget {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 0.75rem 1rem;
+            border-radius: var(--border-radius);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            order: -1;
+        }
+
+        @media (min-width: 768px) {
+            .weather-widget {
+                padding: 1rem 1.5rem;
+                gap: 1rem;
+                order: 0;
+            }
+        }
+
+        .weather-icon {
+            font-size: 1.5rem;
+            animation: bounce 3s infinite;
+        }
+
+        @media (min-width: 768px) {
+            .weather-icon { font-size: 2rem; }
+        }
+
+        .btn-outline {
+            background: rgba(255, 255, 255, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: var(--white);
+            backdrop-filter: blur(10px);
+            font-size: 0.9rem;
+            padding: 0.75rem 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .btn-outline {
+                font-size: 1rem;
+                padding: 1rem 1.5rem;
+            }
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-1px);
+        }
+
+        /* Notification System */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 1rem 1.25rem;
+            box-shadow: var(--shadow-lg);
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            border-left: 4px solid var(--primary-green);
+            min-width: 280px;
+            max-width: 90vw;
+        }
+
+        @media (min-width: 640px) {
+            .notification {
+                min-width: 300px;
+                max-width: 400px;
+            }
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success { border-left-color: var(--primary-green); }
+        .notification.warning { border-left-color: var(--primary-orange); }
+        .notification.error { border-left-color: var(--primary-red); }
+
+        .notification-content {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.9rem;
+        }
+
+        /* Stats Overview */
+        .stats-overview {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        @media (min-width: 640px) {
+            .stats-overview {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+                margin: 2rem 0;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .stats-overview {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .stat-card {
+            background: var(--white);
+            border-radius: var(--border-radius-lg);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (min-width: 640px) {
+            .stat-card { padding: 2rem; }
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-green), var(--secondary-green));
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .stat-title {
+            color: var(--gray-600);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        @media (min-width: 640px) {
+            .stat-title { font-size: 0.9rem; }
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            opacity: 0.3;
+        }
+
+        @media (min-width: 640px) {
+            .stat-icon { font-size: 2.5rem; }
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-green);
+            margin: 0.5rem 0;
+        }
+
+        @media (min-width: 640px) {
+            .stat-value { font-size: 3rem; }
+        }
+
+        .stat-trend {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--primary-green);
+            font-weight: 500;
+        }
+
+        @media (min-width: 640px) {
+            .stat-trend { font-size: 0.875rem; }
+        }
+
+        /* Enhanced Tabs */
+        .tabs-container {
+            margin: 1.5rem 0;
+        }
+
+        @media (min-width: 640px) {
+            .tabs-container { margin: 2rem 0; }
+        }
+
+        .tabs-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            background: var(--white);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (min-width: 640px) {
+            .tabs-list {
+                grid-template-columns: repeat(4, 1fr);
+                margin-bottom: 2rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .tabs-list {
+                grid-template-columns: repeat(8, 1fr);
+            }
+        }
+
+        .tab-trigger {
+            padding: 1rem 0.5rem;
+            border: none;
+            background: var(--white);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            color: var(--gray-600);
+            position: relative;
+            font-family: inherit;
+            font-size: 0.8rem;
+        }
+
+        @media (min-width: 640px) {
+            .tab-trigger {
+                padding: 1.5rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        .tab-trigger::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--primary-green);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .tab-trigger.active::after {
+            transform: scaleX(1);
+        }
+
+        .tab-trigger:hover {
+            background: var(--gray-50);
+            color: var(--gray-700);
+        }
+
+        .tab-trigger.active {
+            background: var(--light-green);
+            color: var(--dark-green);
+        }
+
+        .tab-trigger i {
+            font-size: 1rem;
+        }
+
+        @media (min-width: 640px) {
+            .tab-trigger i { font-size: 1.25rem; }
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--white);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 640px) {
+            .card { margin-bottom: 2rem; }
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-header {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+            color: var(--white);
+        }
+
+        @media (min-width: 640px) {
+            .card-header { padding: 2rem; }
+        }
+
+        .card-header.blue {
+            background: linear-gradient(135deg, var(--primary-blue), #0284c7);
+        }
+
+        .card-header.orange {
+            background: linear-gradient(135deg, var(--primary-orange), #ea580c);
+        }
+
+        .card-header.purple {
+            background: linear-gradient(135deg, var(--primary-purple), #7c3aed);
+        }
+
+        .card-header.gold {
+            background: linear-gradient(135deg, var(--gold), #d97706);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        @media (min-width: 640px) {
+            .card-title { font-size: 1.5rem; }
+        }
+
+        .card-description {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        @media (min-width: 640px) {
+            .card-description { font-size: 1rem; }
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        @media (min-width: 640px) {
+            .card-content { padding: 2rem; }
+        }
+
+        /* Progress Bars */
+        .progress-container {
+            margin: 1.5rem 0;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: var(--gray-200);
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        @media (min-width: 640px) {
+            .progress-bar { height: 12px; }
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-green), var(--secondary-green));
+            border-radius: 5px;
+            transition: width 1s ease;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        /* Data Cards */
+        .data-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .data-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+                margin-bottom: 2rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .data-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .data-card {
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .data-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .data-value {
+            font-size: 3rem;
+            font-weight: 700;
+            margin: 1rem 0;
+        }
+
+        @media (min-width: 640px) {
+            .data-value { font-size: 4rem; }
+        }
+
+        .data-value.green { color: var(--primary-green); }
+        .data-value.orange { color: var(--primary-orange); }
+        .data-value.blue { color: var(--primary-blue); }
+
+        .data-description {
+            color: var(--gray-600);
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        @media (min-width: 640px) {
+            .data-description { font-size: 1.1rem; }
+        }
+
+        .data-controls {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .btn-data {
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .btn-green {
+            background: var(--primary-green);
+            color: var(--white);
+        }
+
+        .btn-green:hover {
+            background: var(--secondary-green);
+        }
+
+        .btn-orange {
+            background: var(--primary-orange);
+            color: var(--white);
+        }
+
+        .btn-orange:hover {
+            background: #ea580c;
+        }
+
+        .btn-blue {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .btn-blue:hover {
+            background: #0284c7;
+        }
+
+        .btn-red {
+            background: var(--primary-red);
+            color: var(--white);
+        }
+
+        .btn-red:hover {
+            background: #dc2626;
+        }
+
+        .data-info {
+            font-size: 0.85rem;
+            color: var(--gray-600);
+            margin-top: 1rem;
+        }
+
+        @media (min-width: 640px) {
+            .data-info { font-size: 0.9rem; }
+        }
+
+        /* Task Management */
+        .task-form {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-direction: column;
+        }
+
+        @media (min-width: 768px) {
+            .task-form {
+                flex-direction: row;
+                margin-bottom: 2rem;
+            }
+        }
+
+        .task-input {
+            flex: 1;
+            min-width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .task-input { min-width: 250px; }
+        }
+
+        .task-select {
+            padding: 0.75rem;
+            border: 2px solid var(--gray-200);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.9rem;
+        }
+
+        .task-filters {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        @media (min-width: 640px) {
+            .task-filters {
+                gap: 1rem;
+                margin-bottom: 2rem;
+            }
+        }
+
+        .task-filter {
+            background: var(--gray-200);
+            color: var(--gray-700);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 640px) {
+            .task-filter { font-size: 0.9rem; }
+        }
+
+        .task-filter.active {
+            background: var(--primary-green);
+            color: var(--white);
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--gray-50);
+            border-radius: var(--border-radius);
+            margin-bottom: 0.75rem;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        @media (min-width: 640px) {
+            .task-item { padding: 1.25rem; }
+        }
+
+        .task-item:hover {
+            background: var(--white);
+            box-shadow: var(--shadow);
+            border-left-color: var(--primary-green);
+        }
+
+        .task-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--primary-green);
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        @media (min-width: 640px) {
+            .task-checkbox {
+                width: 24px;
+                height: 24px;
+            }
+        }
+
+        .task-checkbox.checked {
+            background: var(--primary-green);
+            color: var(--white);
+        }
+
+        .task-text {
+            flex: 1;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        @media (min-width: 640px) {
+            .task-text { font-size: 1rem; }
+        }
+
+        .task-text.completed {
+            text-decoration: line-through;
+            opacity: 0.6;
+        }
+
+        .task-priority {
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        @media (min-width: 640px) {
+            .task-priority { font-size: 0.8rem; }
+        }
+
+        .priority-high { background: var(--primary-red); }
+        .priority-medium { background: var(--primary-orange); }
+        .priority-low { background: var(--primary-green); }
+
+        /* Quiz System */
+        .quiz-container {
+            background: var(--white);
+            border-radius: var(--border-radius-lg);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        @media (min-width: 640px) {
+            .quiz-container { padding: 2.5rem; }
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        @media (min-width: 640px) {
+            .quiz-header {
+                margin-bottom: 2rem;
+                flex-wrap: nowrap;
+            }
+        }
+
+        .quiz-title {
+            color: var(--primary-green);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        @media (min-width: 640px) {
+            .quiz-title { font-size: 1.5rem; }
+        }
+
+        .quiz-score {
+            background: var(--light-green);
+            padding: 0.75rem 1.5rem;
+            border-radius: 20px;
+            color: var(--dark-green);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .quiz-question {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--gray-900);
+            line-height: 1.5;
+        }
+
+        @media (min-width: 640px) {
+            .quiz-question {
+                font-size: 1.25rem;
+                margin-bottom: 2rem;
+            }
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (min-width: 640px) {
+            .quiz-options { margin-bottom: 2rem; }
+        }
+
+        .quiz-option {
+            padding: 1rem;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--white);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        @media (min-width: 640px) {
+            .quiz-option {
+                padding: 1.25rem;
+                font-size: 1rem;
+            }
+        }
+
+        .quiz-option:hover {
+            border-color: var(--primary-green);
+            background: var(--light-green);
+        }
+
+        .quiz-option.selected {
+            border-color: var(--primary-green);
+            background: var(--light-green);
+        }
+
+        .quiz-option.correct {
+            border-color: var(--primary-green);
+            background: #dcfce7;
+        }
+
+        .quiz-option.incorrect {
+            border-color: var(--primary-red);
+            background: #fef2f2;
+        }
+
+        .quiz-controls {
+            text-align: center;
+        }
+
+        .quiz-result {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+            font-weight: 600;
+        }
+
+        @media (min-width: 640px) {
+            .quiz-result { margin-top: 2rem; }
+        }
+
+        .quiz-complete {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        @media (min-width: 640px) {
+            .quiz-complete { padding: 3rem; }
+        }
+
+        .quiz-complete i {
+            font-size: 4rem;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+        }
+
+        @media (min-width: 640px) {
+            .quiz-complete i { font-size: 5rem; }
+        }
+
+        /* Gallery */
+        .upload-area {
+            border: 3px dashed var(--gray-300);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--gray-50);
+            margin-bottom: 1.5rem;
+        }
+
+        @media (min-width: 640px) {
+            .upload-area {
+                padding: 3rem;
+                margin-bottom: 2rem;
+            }
+        }
+
+        .upload-area:hover,
+        .upload-area.dragover {
+            border-color: var(--primary-green);
+            background: var(--light-green);
+            transform: scale(1.02);
+        }
+
+        .upload-area i {
+            font-size: 3rem;
+            color: var(--primary-green);
+            margin-bottom: 1rem;
+        }
+
+        @media (min-width: 640px) {
+            .upload-area i { font-size: 4rem; }
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        @media (min-width: 640px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+                margin-top: 2rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .gallery-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.03);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        @media (min-width: 640px) {
+            .gallery-item img { height: 220px; }
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-text {
+            color: var(--white);
+            font-weight: 600;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        /* Leaderboard */
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.25rem;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 640px) {
+            .leaderboard-item {
+                gap: 1.5rem;
+                padding: 1.5rem;
+            }
+        }
+
+        .leaderboard-item:hover {
+            transform: translateX(5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .leaderboard-rank {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--white);
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        @media (min-width: 640px) {
+            .leaderboard-rank {
+                width: 50px;
+                height: 50px;
+                font-size: 1.25rem;
+            }
+        }
+
+        .leaderboard-rank.gold { background: var(--gold); }
+        .leaderboard-rank.silver { background: #9ca3af; }
+        .leaderboard-rank.bronze { background: #d97706; }
+        .leaderboard-rank.other { background: var(--primary-green); }
+
+        .leaderboard-info {
+            flex: 1;
+        }
+
+        .leaderboard-name {
+            font-weight: 600;
+            color: var(--gray-900);
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        @media (min-width: 640px) {
+            .leaderboard-name { font-size: 1.1rem; }
+        }
+
+        .leaderboard-stats {
+            font-size: 0.85rem;
+            color: var(--gray-600);
+        }
+
+        @media (min-width: 640px) {
+            .leaderboard-stats { font-size: 0.9rem; }
+        }
+
+        .leaderboard-badge {
+            text-align: right;
+        }
+
+        .leaderboard-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            font-size: 0.9rem;
+        }
+
+        .leaderboard-progress {
+            font-size: 0.8rem;
+            color: var(--gray-600);
+        }
+
+        @media (min-width: 640px) {
+            .leaderboard-progress { font-size: 0.9rem; }
+        }
+
+        /* Calendar */
+        .calendar-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 1024px) {
+            .calendar-container {
+                grid-template-columns: 2fr 1fr;
+                gap: 2rem;
+            }
+        }
+
+        .calendar-widget {
+            background: var(--white);
+            border-radius: var(--border-radius-lg);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        @media (min-width: 640px) {
+            .calendar-widget { padding: 2rem; }
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (min-width: 640px) {
+            .calendar-header { margin-bottom: 2rem; }
+        }
+
+        .calendar-title {
+            color: var(--primary-green);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        @media (min-width: 640px) {
+            .calendar-title { font-size: 1.25rem; }
+        }
+
+        .calendar-nav {
+            background: var(--gray-200);
+            color: var(--gray-700);
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .calendar-nav:hover {
+            background: var(--gray-300);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.25rem;
+        }
+
+        @media (min-width: 640px) {
+            .calendar-grid { gap: 0.5rem; }
+        }
+
+        .calendar-day-header {
+            font-weight: 600;
+            color: var(--gray-600);
+            text-align: center;
+            padding: 0.5rem 0.25rem;
+            font-size: 0.8rem;
+        }
+
+        @media (min-width: 640px) {
+            .calendar-day-header {
+                padding: 0.75rem 0.5rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+
+        @media (min-width: 640px) {
+            .calendar-day { font-size: 1rem; }
+        }
+
+        .calendar-day:hover {
+            background: var(--light-green);
+        }
+
+        .calendar-day.today {
+            background: var(--primary-green);
+            color: var(--white);
+        }
+
+        .calendar-day.event {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .events-widget {
+            background: var(--white);
+            border-radius: var(--border-radius-lg);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        @media (min-width: 640px) {
+            .events-widget { padding: 2rem; }
+        }
+
+        .event-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+        }
+
+        .event-date {
+            padding: 0.75rem;
+            border-radius: 8px;
+            text-align: center;
+            min-width: 50px;
+            color: var(--white);
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        @media (min-width: 640px) {
+            .event-date { min-width: 60px; }
+        }
+
+        .event-date-day {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        @media (min-width: 640px) {
+            .event-date-day { font-size: 1.5rem; }
+        }
+
+        .event-date-month {
+            font-size: 0.75rem;
+        }
+
+        @media (min-width: 640px) {
+            .event-date-month { font-size: 0.8rem; }
+        }
+
+        .event-info h4 {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            font-size: 0.95rem;
+        }
+
+        @media (min-width: 640px) {
+            .event-info h4 { font-size: 1rem; }
+        }
+
+        .event-info p {
+            font-size: 0.85rem;
+            color: var(--gray-600);
+        }
+
+        @media (min-width: 640px) {
+            .event-info p { font-size: 0.9rem; }
+        }
+
+        /* Achievement System */
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        @media (min-width: 640px) {
+            .achievement-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1.5rem;
+                margin: 2rem 0;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .achievement-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .achievement-badge {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 1.5rem 1rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        @media (min-width: 640px) {
+            .achievement-badge { padding: 2rem 1.5rem; }
+        }
+
+        .achievement-badge:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .achievement-badge.unlocked {
+            background: linear-gradient(135deg, var(--gold), #d97706);
+            color: var(--white);
+            border-color: var(--gold);
+        }
+
+        .achievement-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        @media (min-width: 640px) {
+            .achievement-icon { font-size: 3rem; }
+        }
+
+        .achievement-title {
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        @media (min-width: 640px) {
+            .achievement-title { font-size: 0.95rem; }
+        }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            padding: 1rem;
+        }
+
+        .modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--white);
+            border-radius: var(--border-radius-lg);
+            padding: 2rem;
+            max-width: 500px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+            box-shadow: var(--shadow-xl);
+        }
+
+        @media (min-width: 640px) {
+            .modal-content {
+                padding: 2.5rem;
+                max-width: 600px;
+            }
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (min-width: 640px) {
+            .modal-header { margin-bottom: 2rem; }
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        @media (min-width: 640px) {
+            .modal-title { font-size: 1.5rem; }
+        }
+
+        .modal-close {
+            background: var(--gray-200);
+            color: var(--gray-700);
+            padding: 0.5rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: var(--gray-300);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary-green);
+            color: var(--white);
+            border: none;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            font-size: 1.1rem;
+        }
+
+        @media (min-width: 640px) {
+            .theme-toggle {
+                bottom: 30px;
+                right: 30px;
+                width: 60px;
+                height: 60px;
+                font-size: 1.25rem;
+            }
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(5, 150, 105, 0.4);
+        }
+
+        /* Dark Mode */
+        body.dark-mode {
+            background: linear-gradient(135deg, #1f2937 0%, #111827 50%, #0f172a 100%);
+            color: #f9fafb;
+        }
+
+        .dark-mode .card,
+        .dark-mode .stat-card,
+        .dark-mode .calendar-widget,
+        .dark-mode .events-widget,
+        .dark-mode .quiz-container,
+        .dark-mode .leaderboard-item,
+        .dark-mode .achievement-badge,
+        .dark-mode .modal-content {
+            background: #374151;
+            color: #f9fafb;
+        }
+
+        .dark-mode .form-input,
+        .dark-mode .task-select {
+            background: #4b5563;
+            border-color: #6b7280;
+            color: #f9fafb;
+        }
+
+        .dark-mode .tab-trigger {
+            background: #374151;
+            color: #d1d5db;
+        }
+
+        .dark-mode .tab-trigger.active {
+            background: var(--primary-green);
+            color: var(--white);
+        }
+
+        .dark-mode .task-item {
+            background: #4b5563;
+        }
+
+        .dark-mode .task-item:hover {
+            background: #374151;
+        }
+
+        /* Utility Classes */
+        .hidden { display: none !important; }
+        .text-center { text-align: center; }
+        .text-left { text-align: left; }
+        .text-right { text-align: right; }
+        .font-bold { font-weight: 700; }
+        .font-semibold { font-weight: 600; }
+        .text-sm { font-size: 0.875rem; }
+        .text-lg { font-size: 1.125rem; }
+        .text-xl { font-size: 1.25rem; }
+        .mb-1 { margin-bottom: 0.25rem; }
+        .mb-2 { margin-bottom: 0.5rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .mt-2 { margin-top: 0.5rem; }
+        .mt-4 { margin-top: 1rem; }
+
+        /* Loading States */
+        .loading-spinner {
+            width: 30px;
+            height: 30px;
+            border: 3px solid var(--gray-200);
+            border-top: 3px solid var(--primary-green);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 1.5rem auto;
+        }
+
+        @media (min-width: 640px) {
+            .loading-spinner {
+                width: 40px;
+                height: 40px;
+                border-width: 4px;
+                margin: 2rem auto;
+            }
+        }
+
+        /* Responsive Grid Improvements */
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 0.75rem;
+            }
+            
+            .header-content {
+                text-align: center;
+                gap: 0.75rem;
+            }
+            
+            .header-left {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+            
+            .tabs-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .achievement-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .leaderboard-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.75rem;
+            }
+            
+            .task-filters {
+                flex-direction: column;
+            }
+            
+            .data-controls {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+
+        /* Enhanced Focus States */
+        .btn:focus,
+        .form-input:focus,
+        .task-select:focus,
+        .calendar-nav:focus,
+        .modal-close:focus,
+        .theme-toggle:focus {
+            outline: 2px solid var(--primary-green);
+            outline-offset: 2px;
+        }
+
+        /* Improved Hover States */
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        /* Better Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        p {
+            line-height: 1.6;
+        }
+
+        /* Enhanced Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--gray-100);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-green);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-green);
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark Mode">
+        <i class="fas fa-moon" id="themeIcon"></i>
+    </button>
+
+    <!-- Notification -->
+    <div id="notification" class="notification">
+        <div class="notification-content">
+            <i class="fas fa-check-circle"></i>
+            <span id="notificationText">Notifikasi</span>
+        </div>
+    </div>
+
+    <!-- Login Section -->
+    <div id="loginSection" class="login-container">
+        <div class="login-card animate-fadeIn">
+            <div class="school-logo animate-bounce">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            
+            <h1 class="login-title">Program Adiwiyata</h1>
+            <p class="login-subtitle">SMA Negeri 19 Palembang</p>
+            
+            <div class="school-info">
+                <div class="font-semibold mb-1">🏫 Sekolah Adiwiyata Mandiri</div>
+                <div class="text-sm">Jl. Jenderal Sudirman, Palembang, Sumatera Selatan</div>
+            </div>
+            
+            <form onsubmit="login(); return false;">
+                <div class="form-group">
+                    <label class="form-label" for="username">Username</label>
+                    <input type="text" id="username" class="form-input" placeholder="Masukkan username" value="admin" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <input type="password" id="password" class="form-input" placeholder="Masukkan password" value="sman19" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Masuk ke Dashboard
+                </button>
+            </form>
+            
+            <div id="loginError" class="error-message hidden"></div>
+            
+            <div class="text-center mt-4 text-sm" style="color: var(--gray-600);">
+                <p><strong>Demo Login:</strong> admin / sman19</p>
+                <p class="mt-2">🌱 Sekolah Peduli dan Berbudaya Lingkungan</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent" class="hidden">
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <div class="header-content">
+                    <div class="header-left">
+                        <div class="header-logo">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <div class="header-info">
+                            <h1>Program Adiwiyata</h1>
+                            <p>SMA Negeri 19 Palembang</p>
+                        </div>
+                    </div>
+                    
+                    <div class="weather-widget">
+                        <i class="fas fa-sun weather-icon"></i>
+                        <div>
+                            <div class="font-bold">32°C</div>
+                            <div class="text-sm">Cerah Berawan</div>
+                        </div>
+                    </div>
+                    
+                    <button onclick="logout()" class="btn btn-outline">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="container">
+            <!-- Stats Overview -->
+            <div class="stats-overview animate-fadeIn">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div>
+                            <div class="stat-title">Total Pohon Ditanam</div>
+                            <div class="stat-value" id="statPohon">125</div>
+                            <div class="stat-trend">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+15% bulan ini</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-tree stat-icon" style="color: var(--primary-green);"></i>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div>
+                            <div class="stat-title">Sampah Daur Ulang (kg)</div>
+                            <div class="stat-value" id="statSampah" style="color: var(--primary-orange);">68</div>
+                            <div class="stat-trend" style="color: var(--primary-orange);">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+12% bulan ini</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-recycle stat-icon" style="color: var(--primary-orange);"></i>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div>
+                            <div class="stat-title">Kegiatan Selesai</div>
+                            <div class="stat-value" id="statKegiatan" style="color: var(--primary-blue);">24</div>
+                            <div class="stat-trend" style="color: var(--primary-blue);">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+20% bulan ini</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-tasks stat-icon" style="color: var(--primary-blue);"></i>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div>
+                            <div class="stat-title">Skor Adiwiyata</div>
+                            <div class="stat-value" id="statSkor" style="color: var(--primary-purple);">92</div>
+                            <div class="stat-trend" style="color: var(--primary-purple);">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+8% bulan ini</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-medal stat-icon" style="color: var(--primary-purple);"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enhanced Tabs -->
+            <div class="tabs-container">
+                <div class="tabs-list">
+                    <button class="tab-trigger active" onclick="showTab('dashboard')">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </button>
+                    <button class="tab-trigger" onclick="showTab('tentang')">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Tentang</span>
+                    </button>
+                    <button class="tab-trigger" onclick="showTab('galeri')">
+                        <i class="fas fa-images"></i>
+                        <span>Galeri</span>
+                    </button>
+                    <button class="tab-trigger" onclick="showTab('data')">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Data</span>
+                    </button>
+                    <button class="tab-trigger" onclick="showTab('tasks')">
+                        <i class="fas fa-tasks"></i>
+                        <span>Tugas</span>
+                    </button>
+                    <button class="tab-trigger" onclick="showTab('quiz')">
+                        <i class="fas fa-brain"></i>
+                        <span>Kuis</span>
+                    </button>
+                    <button class="tab-trigger" onclick="showTab('leaderboard')">
+                        <i class="fas fa-trophy"></i>
+                        <span>Peringkat</span>
+                    </button>
+                    <button class="tab-trigger" onclick="showTab('calendar')">
+                        <i class="fas fa-calendar"></i>
+                        <span>Kalender</span>
+                    </button>
+                </div>
+
+                <!-- Dashboard Tab -->
+                <div id="dashboard" class="tab-content active">
+                    <div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                        <div class="card">
+                            <div class="card-header purple">
+                                <h2 class="card-title">
+                                    <i class="fas fa-chart-area"></i>
+                                    Progress Lingkungan SMA Negeri 19
+                                </h2>
+                                <p class="card-description">Visualisasi data kegiatan Adiwiyata real-time</p>
+                            </div>
+                            <div class="card-content">
+                                <div style="height: 300px;">
+                                    <canvas id="dashboardChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header gold">
+                                <h2 class="card-title">
+                                    <i class="fas fa-award"></i>
+                                    Pencapaian Terbaru
+                                </h2>
+                                <p class="card-description">Badge dan prestasi lingkungan</p>
+                            </div>
+                            <div class="card-content">
+                                <div class="achievement-grid">
+                                    <div class="achievement-badge unlocked" onclick="showAchievement('tree-master')">
+                                        <i class="fas fa-tree achievement-icon"></i>
+                                        <div class="achievement-title">Tree Master</div>
+                                    </div>
+                                    <div class="achievement-badge unlocked" onclick="showAchievement('eco-champion')">
+                                        <i class="fas fa-recycle achievement-icon"></i>
+                                        <div class="achievement-title">Eco Champion</div>
+                                    </div>
+                                    <div class="achievement-badge unlocked" onclick="showAchievement('green-school')">
+                                        <i class="fas fa-school achievement-icon"></i>
+                                        <div class="achievement-title">Green School</div>
+                                    </div>
+                                    <div class="achievement-badge" onclick="showAchievement('eco-legend')">
+                                        <i class="fas fa-crown achievement-icon"></i>
+                                        <div class="achievement-title">Eco Legend</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Progress Tracking -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-bullseye"></i>
+                                Target Semester Genap 2024
+                            </h2>
+                            <p class="card-description">Progress menuju target lingkungan SMA Negeri 19 Palembang</p>
+                        </div>
+                        <div class="card-content">
+                            <div style="display: grid; gap: 1.5rem;">
+                                <div class="progress-container">
+                                    <div class="progress-label">
+                                        <span><i class="fas fa-tree"></i> Penanaman Pohon</span>
+                                        <span><span id="treeProgress">125</span>/200 pohon</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" id="treeProgressBar" style="width: 62.5%;"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="progress-container">
+                                    <div class="progress-label">
+                                        <span><i class="fas fa-recycle"></i> Daur Ulang Sampah</span>
+                                        <span><span id="recycleProgress">68</span>/100 kg</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" id="recycleProgressBar" style="width: 68%;"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="progress-container">
+                                    <div class="progress-label">
+                                        <span><i class="fas fa-broom"></i> Kegiatan Bersih-Bersih</span>
+                                        <span><span id="cleanProgress">24</span>/30 kegiatan</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" id="cleanProgressBar" style="width: 80%;"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="progress-container">
+                                    <div class="progress-label">
+                                        <span><i class="fas fa-lightbulb"></i> Hemat Energi</span>
+                                        <span><span id="energyProgress">15</span>/20%</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" id="energyProgressBar" style="width: 75%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- About Tab -->
+                <div id="tentang" class="tab-content">
+                    <div class="card animate-slideIn">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-school"></i>
+                                SMA Negeri 19 Palembang - Sekolah Adiwiyata
+                            </h2>
+                            <p class="card-description">Sekolah Peduli dan Berbudaya Lingkungan</p>
+                        </div>
+                        <div class="card-content">
+                            <div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                                <div>
+                                    <p class="mb-4">
+                                        SMA Negeri 19 Palembang telah meraih status <strong>Sekolah Adiwiyata Mandiri</strong> sejak tahun 2020. 
+                                        Sekolah kami berkomitmen penuh dalam mengimplementasikan program Adiwiyata yang bertujuan mewujudkan 
+                                        sekolah yang peduli dan berbudaya lingkungan hidup.
+                                    </p>
+                                    
+                                    <p class="mb-4">
+                                        Dengan motto <em>"Berprestasi, Berkarakter, dan Berwawasan Lingkungan"</em>, SMA Negeri 19 Palembang 
+                                        terus mengintegrasikan nilai-nilai lingkungan dalam seluruh aspek pendidikan dan kehidupan sekolah.
+                                    </p>
+                                    
+                                    <div style="background: var(--light-green); padding: 1.5rem; border-radius: var(--border-radius); border-left: 4px solid var(--primary-green);">
+                                        <h4 style="color: var(--dark-green); margin-bottom: 0.5rem;">🎯 Visi Lingkungan</h4>
+                                        <p style="color: var(--dark-green);">Menjadi sekolah unggul yang menghasilkan generasi cerdas, berkarakter, dan peduli lingkungan.</p>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <div style="background: linear-gradient(135deg, var(--light-blue), var(--light-green)); padding: 2rem; border-radius: var(--border-radius); text-align: center;">
+                                        <i class="fas fa-trophy" style="font-size: 3rem; color: var(--gold); margin-bottom: 1rem;"></i>
+                                        <h3 style="color: var(--primary-blue); margin-bottom: 0.5rem;">Status Sekolah</h3>
+                                        <div style="background: var(--primary-green); color: var(--white); padding: 0.75rem 1.5rem; border-radius: 25px; font-weight: 700; margin-bottom: 1rem;">
+                                            Adiwiyata Mandiri
+                                        </div>
+                                        <div class="text-sm" style="color: var(--gray-600);">
+                                            <div>📍 Jl. Jenderal Sudirman</div>
+                                            <div>🏙️ Palembang, Sumatera Selatan</div>
+                                            <div>📞 (0711) 123456</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- School Statistics -->
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-top: 1.5rem;">
+                                <div style="background: var(--gray-50); padding: 1.5rem; border-radius: var(--border-radius); text-align: center;">
+                                    <i class="fas fa-users" style="font-size: 2rem; color: var(--primary-blue); margin-bottom: 0.5rem;"></i>
+                                    <div class="font-bold text-xl">1,250</div>
+                                    <div class="text-sm" style="color: var(--gray-600);">Total Siswa</div>
+                                </div>
+                                <div style="background: var(--gray-50); padding: 1.5rem; border-radius: var(--border-radius); text-align: center;">
+                                    <i class="fas fa-chalkboard-teacher" style="font-size: 2rem; color: var(--primary-green); margin-bottom: 0.5rem;"></i>
+                                    <div class="font-bold text-xl">85</div>
+                                    <div class="text-sm" style="color: var(--gray-600);">Guru & Staff</div>
+                                </div>
+                                <div style="background: var(--gray-50); padding: 1.5rem; border-radius: var(--border-radius); text-align: center;">
+                                    <i class="fas fa-door-open" style="font-size: 2rem; color: var(--primary-orange); margin-bottom: 0.5rem;"></i>
+                                    <div class="font-bold text-xl">36</div>
+                                    <div class="text-sm" style="color: var(--gray-600);">Ruang Kelas</div>
+                                </div>
+                                <div style="background: var(--gray-50); padding: 1.5rem; border-radius: var(--border-radius); text-align: center;">
+                                    <i class="fas fa-seedling" style="font-size: 2rem; color: var(--primary-purple); margin-bottom: 0.5rem;"></i>
+                                    <div class="font-bold text-xl">5,000m²</div>
+                                    <div class="text-sm" style="color: var(--gray-600);">Area Hijau</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 4 Pilar Adiwiyata -->
+                    <div class="card">
+                        <div class="card-header blue">
+                            <h2 class="card-title">
+                                <i class="fas fa-columns"></i>
+                                4 Pilar Adiwiyata SMA Negeri 19 Palembang
+                            </h2>
+                            <p class="card-description">Implementasi komprehensif program Adiwiyata</p>
+                        </div>
+                        <div class="card-content">
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                                <div style="background: var(--gray-50); padding: 2rem; border-radius: var(--border-radius); border-left: 4px solid var(--primary-green);">
+                                    <div style="background: var(--primary-green); color: var(--white); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                                        <i class="fas fa-gavel"></i>
+                                    </div>
+                                    <h4 class="font-semibold mb-2">Kebijakan Berwawasan Lingkungan</h4>
+                                    <p class="text-sm" style="color: var(--gray-600);">Mengembangkan kebijakan sekolah yang mendukung kegiatan ramah lingkungan dan pembangunan berkelanjutan di SMA Negeri 19 Palembang.</p>
+                                </div>
+                                
+                                <div style="background: var(--gray-50); padding: 2rem; border-radius: var(--border-radius); border-left: 4px solid var(--primary-blue);">
+                                    <div style="background: var(--primary-blue); color: var(--white); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                                        <i class="fas fa-book-open"></i>
+                                    </div>
+                                    <h4 class="font-semibold mb-2">Kurikulum Berbasis Lingkungan</h4>
+                                    <p class="text-sm" style="color: var(--gray-600);">Mengintegrasikan materi lingkungan hidup ke dalam kurikulum dan proses pembelajaran di semua mata pelajaran.</p>
+                                </div>
+                                
+                                <div style="background: var(--gray-50); padding: 2rem; border-radius: var(--border-radius); border-left: 4px solid var(--primary-orange);">
+                                    <div style="background: var(--primary-orange); color: var(--white); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    <h4 class="font-semibold mb-2">Kegiatan Partisipatif</h4>
+                                    <p class="text-sm" style="color: var(--gray-600);">Melibatkan seluruh warga sekolah dalam kegiatan lingkungan yang kreatif, inovatif, dan berkelanjutan.</p>
+                                </div>
+                                
+                                <div style="background: var(--gray-50); padding: 2rem; border-radius: var(--border-radius); border-left: 4px solid var(--primary-purple);">
+                                    <div style="background: var(--primary-purple); color: var(--white); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                                        <i class="fas fa-building"></i>
+                                    </div>
+                                    <h4 class="font-semibold mb-2">Sarana Ramah Lingkungan</h4>
+                                    <p class="text-sm" style="color: var(--gray-600);">Mengelola sarana dan prasarana sekolah yang mendukung kegiatan ramah lingkungan dan hemat energi.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery Tab -->
+                <div id="galeri" class="tab-content">
+                    <div class="card">
+                        <div class="card-header purple">
+                            <h2 class="card-title">
+                                <i class="fas fa-camera"></i>
+                                Galeri Kegiatan Adiwiyata SMA Negeri 19
+                            </h2>
+                            <p class="card-description">Dokumentasi kegiatan lingkungan dan prestasi sekolah</p>
+                        </div>
+                        <div class="card-content">
+                            <!-- Upload Area -->
+                            <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <h3 class="mt-2 mb-2">Upload Foto Kegiatan</h3>
+                                <p style="color: var(--gray-600);">Klik atau drag & drop foto kegiatan Adiwiyata di sini</p>
+                                <input type="file" id="fileInput" multiple accept="image/*" style="display: none;" onchange="handleFileUpload(event)">
+                            </div>
+                            
+                            <!-- Gallery Grid -->
+                            <div id="galleryGrid" class="gallery-grid">
+                                <div class="gallery-item" onclick="openImageModal('/placeholder.svg?height=300&width=400&text=Penanaman+Pohon+SMAN+19', 'Penanaman Pohon Siswa SMA Negeri 19')">
+                                    <img src="/placeholder.svg?height=300&width=400&text=Penanaman+Pohon+SMAN+19" alt="Penanaman Pohon">
+                                    <div class="gallery-overlay">
+                                        <div class="gallery-text">
+                                            <i class="fas fa-search-plus" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                                            <div class="font-semibold">Penanaman Pohon Siswa SMA Negeri 19</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="gallery-item" onclick="openImageModal('/placeholder.svg?height=300&width=400&text=Bank+Sampah+SMAN+19', 'Program Bank Sampah Sekolah')">
+                                    <img src="/placeholder.svg?height=300&width=400&text=Bank+Sampah+SMAN+19" alt="Bank Sampah">
+                                    <div class="gallery-overlay">
+                                        <div class="gallery-text">
+                                            <i class="fas fa-search-plus" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                                            <div class="font-semibold">Program Bank Sampah Sekolah</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="gallery-item" onclick="openImageModal('/placeholder.svg?height=300&width=400&text=Bersih-Bersih+Lingkungan', 'Kegiatan Bersih-Bersih Lingkungan')">
+                                    <img src="/placeholder.svg?height=300&width=400&text=Bersih-Bersih+Lingkungan" alt="Bersih Bersih">
+                                    <div class="gallery-overlay">
+                                        <div class="gallery-text">
+                                            <i class="fas fa-search-plus" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                                            <div class="font-semibold">Kegiatan Bersih-Bersih Lingkungan</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="gallery-item" onclick="openImageModal('/placeholder.svg?height=300&width=400&text=Taman+Sekolah+SMAN+19', 'Taman Sekolah SMA Negeri 19')">
+                                    <img src="/placeholder.svg?height=300&width=400&text=Taman+Sekolah+SMAN+19" alt="Taman Sekolah">
+                                    <div class="gallery-overlay">
+                                        <div class="gallery-text">
+                                            <i class="fas fa-search-plus" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                                            <div class="font-semibold">Taman Sekolah SMA Negeri 19</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="gallery-item" onclick="openImageModal('/placeholder.svg?height=300&width=400&text=Kompos+Organik', 'Pembuatan Kompos Organik')">
+                                    <img src="/placeholder.svg?height=300&width=400&text=Kompos+Organik" alt="Kompos">
+                                    <div class="gallery-overlay">
+                                        <div class="gallery-text">
+                                            <i class="fas fa-search-plus" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                                            <div class="font-semibold">Pembuatan Kompos Organik</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="gallery-item" onclick="openImageModal('/placeholder.svg?height=300&width=400&text=Workshop+Lingkungan', 'Workshop Edukasi Lingkungan')">
+                                    <img src="/placeholder.svg?height=300&width=400&text=Workshop+Lingkungan" alt="Workshop">
+                                    <div class="gallery-overlay">
+                                        <div class="gallery-text">
+                                            <i class="fas fa-search-plus" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                                            <div class="font-semibold">Workshop Edukasi Lingkungan</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Tab -->
+                <div id="data" class="tab-content">
+                    <div class="data-grid">
+                        <div class="card data-card">
+                            <div class="card-header" style="background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));">
+                                <h3 class="card-title">
+                                    <i class="fas fa-tree"></i>
+                                    Pohon Ditanam
+                                </h3>
+                                <p class="card-description">Total penanaman di area sekolah</p>
+                            </div>
+                            <div class="card-content">
+                                <div class="data-value green" id="jumlahPohon">125</div>
+                                <p class="data-description">Pohon telah ditanam di SMA Negeri 19</p>
+                                <div class="data-controls">
+                                    <button onclick="tambahPohon()" class="btn btn-data btn-green">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                    <button onclick="kurangPohon()" class="btn btn-data btn-red">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                                <div class="data-info">
+                                    <i class="fas fa-calendar-alt"></i> Target semester: 200 pohon
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card data-card">
+                            <div class="card-header orange">
+                                <h3 class="card-title">
+                                    <i class="fas fa-recycle"></i>
+                                    Sampah Daur Ulang
+                                </h3>
+                                <p class="card-description">Program bank sampah sekolah</p>
+                            </div>
+                            <div class="card-content">
+                                <div class="data-value orange" id="jumlahSampah">68</div>
+                                <p class="data-description">Kilogram sampah berhasil didaur ulang</p>
+                                <div class="data-controls">
+                                    <button onclick="tambahSampah()" class="btn btn-data btn-orange">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                    <button onclick="kurangSampah()" class="btn btn-data btn-red">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                                <div class="data-info">
+                                    <i class="fas fa-calendar-alt"></i> Target semester: 100 kg
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card data-card">
+                            <div class="card-header blue">
+                                <h3 class="card-title">
+                                    <i class="fas fa-broom"></i>
+                                    Kegiatan Bersih
+                                </h3>
+                                <p class="card-description">Aksi bersih-bersih lingkungan</p>
+                            </div>
+                            <div class="card-content">
+                                <div class="data-value blue" id="jumlahKegiatan">24</div>
+                                <p class="data-description">Kegiatan bersih-bersih telah dilakukan</p>
+                                <div class="data-controls">
+                                    <button onclick="tambahKegiatan()" class="btn btn-data btn-blue">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                    <button onclick="kurangKegiatan()" class="btn btn-data btn-red">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                                <div class="data-info">
+                                    <i class="fas fa-calendar-alt"></i> Target semester: 30 kegiatan
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Chart Section -->
+                    <div class="card">
+                        <div class="card-header purple">
+                            <h2 class="card-title">
+                                <i class="fas fa-chart-bar"></i>
+                                Analisis Data Lingkungan SMA Negeri 19
+                            </h2>
+                            <p class="card-description">Visualisasi progress dan tren kegiatan Adiwiyata</p>
+                        </div>
+                        <div class="card-content">
+                            <div style="display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap;">
+                                <button onclick="changeChartType('bar')" class="btn btn-green">
+                                    <i class="fas fa-chart-bar"></i> Bar Chart
+                                </button>
+                                <button onclick="changeChartType('line')" class="btn btn-blue">
+                                    <i class="fas fa-chart-line"></i> Line Chart
+                                </button>
+                                <button onclick="changeChartType('doughnut')" class="btn btn-orange">
+                                    <i class="fas fa-chart-pie"></i> Pie Chart
+                                </button>
+                                <button onclick="exportData()" class="btn" style="background: var(--primary-purple); color: var(--white);">
+                                    <i class="fas fa-download"></i> Export Data
+                                </button>
+                            </div>
+                            <div style="height: 350px;">
+                                <canvas id="myChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tasks Tab -->
+                <div id="tasks" class="tab-content">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-tasks"></i>
+                                Manajemen Tugas Adiwiyata SMA Negeri 19
+                            </h2>
+                            <p class="card-description">Kelola dan pantau tugas-tugas kegiatan lingkungan sekolah</p>
+                        </div>
+                        <div class="card-content">
+                            <!-- Add Task Form -->
+                            <div class="task-form">
+                                <input type="text" id="newTaskInput" class="form-input task-input" placeholder="Tambah tugas lingkungan baru...">
+                                <select id="taskPriority" class="task-select">
+                                    <option value="low">Prioritas Rendah</option>
+                                    <option value="medium">Prioritas Sedang</option>
+                                    <option value="high">Prioritas Tinggi</option>
+                                </select>
+                                <button onclick="addTask()" class="btn btn-green">
+                                    <i class="fas fa-plus"></i> Tambah Tugas
+                                </button>
+                            </div>
+                            
+                            <!-- Task Filters -->
+                            <div class="task-filters">
+                                <button onclick="filterTasks('all')" class="btn task-filter active" data-filter="all">
+                                    <i class="fas fa-list"></i> Semua Tugas
+                                </button>
+                                <button onclick="filterTasks('pending')" class="btn task-filter" data-filter="pending">
+                                    <i class="fas fa-clock"></i> Belum Selesai
+                                </button>
+                                <button onclick="filterTasks('completed')" class="btn task-filter" data-filter="completed">
+                                    <i class="fas fa-check"></i> Selesai
+                                </button>
+                                <button onclick="filterTasks('high')" class="btn task-filter" data-filter="high">
+                                    <i class="fas fa-exclamation"></i> Prioritas Tinggi
+                                </button>
+                            </div>
+                            
+                            <!-- Task List -->
+                            <div id="taskList">
+                                <!-- Tasks will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quiz Tab -->
+                <div id="quiz" class="tab-content">
+                    <div class="quiz-container">
+                        <div class="quiz-header">
+                            <h2 class="quiz-title">
+                                <i class="fas fa-brain"></i>
+                                Kuis Adiwiyata SMA Negeri 19
+                            </h2>
+                            <div class="quiz-score">
+                                Skor: <span id="quizScore">0</span>/100
+                            </div>
+                        </div>
+                        
+                        <div id="quizContent">
+                            <div class="quiz-question" id="questionText">
+                                Apa yang dimaksud dengan program Adiwiyata?
+                            </div>
+                            
+                            <div class="quiz-options" id="quizOptions">
+                                <div class="quiz-option" onclick="selectAnswer(0)">
+                                    A. Program untuk meningkatkan prestasi akademik siswa
+                                </div>
+                                <div class="quiz-option" onclick="selectAnswer(1)">
+                                    B. Program sekolah peduli dan berbudaya lingkungan
+                                </div>
+                                <div class="quiz-option" onclick="selectAnswer(2)">
+                                    C. Program peningkatan fasilitas sekolah
+                                </div>
+                                <div class="quiz-option" onclick="selectAnswer(3)">
+                                    D. Program beasiswa untuk siswa berprestasi
+                                </div>
+                            </div>
+                            
+                            <div class="quiz-controls">
+                                <button onclick="submitAnswer()" class="btn btn-green" disabled id="submitBtn">
+                                    <i class="fas fa-check"></i> Submit Jawaban
+                                </button>
+                                <button onclick="nextQuestion()" class="btn btn-blue hidden" id="nextBtn">
+                                    <i class="fas fa-arrow-right"></i> Soal Berikutnya
+                                </button>
+                            </div>
+                            
+                            <div id="quizResult" class="quiz-result hidden">
+                                <!-- Quiz result will be shown here -->
+                            </div>
+                        </div>
+                        
+                        <div id="quizComplete" class="quiz-complete hidden">
+                            <i class="fas fa-trophy"></i>
+                            <h3 style="color: var(--primary-green); margin-bottom: 1rem;">Kuis Selesai!</h3>
+                            <p style="font-size: 1.25rem; margin-bottom: 2rem;">Skor Akhir: <span id="finalScore">0</span>/100</p>
+                            <button onclick="restartQuiz()" class="btn btn-green">
+                                <i class="fas fa-redo"></i> Ulangi Kuis
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Leaderboard Tab -->
+                <div id="leaderboard" class="tab-content">
+                    <div class="card">
+                        <div class="card-header gold">
+                            <h2 class="card-title">
+                                <i class="fas fa-trophy"></i>
+                                Papan Peringkat Kelas SMA Negeri 19
+                            </h2>
+                            <p class="card-description">Ranking berdasarkan kontribusi kegiatan Adiwiyata</p>
+                        </div>
+                        <div class="card-content">
+                            <div style="display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap;">
+                                <button onclick="sortLeaderboard('points')" class="btn btn-green">
+                                    <i class="fas fa-star"></i> Berdasarkan Poin
+                                </button>
+                                <button onclick="sortLeaderboard('trees')" class="btn btn-blue">
+                                    <i class="fas fa-tree"></i> Berdasarkan Pohon
+                                </button>
+                                <button onclick="sortLeaderboard('activities')" class="btn btn-orange">
+                                    <i class="fas fa-tasks"></i> Berdasarkan Kegiatan
+                                </button>
+                            </div>
+                            
+                            <div id="leaderboardList">
+                                <div class="leaderboard-item">
+                                    <div class="leaderboard-rank gold">1</div>
+                                    <div class="leaderboard-info">
+                                        <div class="leaderboard-name">XII IPA 1</div>
+                                        <div class="leaderboard-stats">95 poin • 35 pohon • 18 kegiatan</div>
+                                    </div>
+                                    <div class="leaderboard-badge">
+                                        <div class="leaderboard-title" style="color: var(--gold);">🏆 Juara Umum</div>
+                                        <div class="leaderboard-progress">+8 poin minggu ini</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="leaderboard-item">
+                                    <div class="leaderboard-rank silver">2</div>
+                                    <div class="leaderboard-info">
+                                        <div class="leaderboard-name">XI IPA 2</div>
+                                        <div class="leaderboard-stats">88 poin • 32 pohon • 16 kegiatan</div>
+                                    </div>
+                                    <div class="leaderboard-badge">
+                                        <div class="leaderboard-title" style="color: #9ca3af;">🥈 Runner Up</div>
+                                        <div class="leaderboard-progress">+6 poin minggu ini</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="leaderboard-item">
+                                    <div class="leaderboard-rank bronze">3</div>
+                                    <div class="leaderboard-info">
+                                        <div class="leaderboard-name">X IPS 1</div>
+                                        <div class="leaderboard-stats">82 poin • 28 pohon • 15 kegiatan</div>
+                                    </div>
+                                    <div class="leaderboard-badge">
+                                        <div class="leaderboard-title" style="color: #d97706;">🥉 Peringkat 3</div>
+                                        <div class="leaderboard-progress">+4 poin minggu ini</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="leaderboard-item">
+                                    <div class="leaderboard-rank other">4</div>
+                                    <div class="leaderboard-info">
+                                        <div class="leaderboard-name">XII IPS 2</div>
+                                        <div class="leaderboard-stats">75 poin • 25 pohon • 12 kegiatan</div>
+                                    </div>
+                                    <div class="leaderboard-badge">
+                                        <div class="leaderboard-title" style="color: var(--primary-green);">🌱 Eco Warrior</div>
+                                        <div class="leaderboard-progress">+5 poin minggu ini</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="leaderboard-item">
+                                    <div class="leaderboard-rank other">5</div>
+                                    <div class="leaderboard-info">
+                                        <div class="leaderboard-name">XI IPS 1</div>
+                                        <div class="leaderboard-stats">68 poin • 22 pohon • 11 kegiatan</div>
+                                    </div>
+                                    <div class="leaderboard-badge">
+                                        <div class="leaderboard-title" style="color: var(--primary-blue);">🌿 Green Hero</div>
+                                        <div class="leaderboard-progress">+3 poin minggu ini</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Calendar Tab -->
+                <div id="calendar" class="tab-content">
+                    <div class="calendar-container">
+                        <div class="calendar-widget">
+                            <div class="calendar-header">
+                                <button onclick="changeMonth(-1)" class="btn calendar-nav">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <h3 class="calendar-title" id="currentMonth">Desember 2024</h3>
+                                <button onclick="changeMonth(1)" class="btn calendar-nav">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                            
+                            <div class="calendar-grid">
+                                <div class="calendar-day-header">Min</div>
+                                <div class="calendar-day-header">Sen</div>
+                                <div class="calendar-day-header">Sel</div>
+                                <div class="calendar-day-header">Rab</div>
+                                <div class="calendar-day-header">Kam</div>
+                                <div class="calendar-day-header">Jum</div>
+                                <div class="calendar-day-header">Sab</div>
+                                
+                                <!-- Calendar days will be populated by JavaScript -->
+                                <div id="calendarDays"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="events-widget">
+                            <div class="card-header" style="background: linear-gradient(135deg, var(--primary-blue), #0284c7); color: var(--white); margin: -2rem -2rem 2rem -2rem; padding: 1.5rem 2rem;">
+                                <h3 class="card-title">
+                                    <i class="fas fa-calendar-check"></i>
+                                    Kegiatan Mendatang
+                                </h3>
+                            </div>
+                            
+                            <div id="upcomingEvents">
+                                <div class="event-item" style="background: var(--light-green);">
+                                    <div class="event-date" style="background: var(--primary-green);">
+                                        <div class="event-date-day">15</div>
+                                        <div class="event-date-month">Des</div>
+                                    </div>
+                                    <div class="event-info">
+                                        <h4>Penanaman Pohon Massal</h4>
+                                        <p>Halaman sekolah • 07:00 - 09:00</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="event-item" style="background: var(--light-blue);">
+                                    <div class="event-date" style="background: var(--primary-blue);">
+                                        <div class="event-date-day">18</div>
+                                        <div class="event-date-month">Des</div>
+                                    </div>
+                                    <div class="event-info">
+                                        <h4>Workshop Kompos Organik</h4>
+                                        <p>Lab Biologi • 10:00 - 12:00</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="event-item" style="background: #fff7ed;">
+                                    <div class="event-date" style="background: var(--primary-orange);">
+                                        <div class="event-date-day">22</div>
+                                        <div class="event-date-month">Des</div>
+                                    </div>
+                                    <div class="event-info">
+                                        <h4>Bersih-bersih Sekolah</h4>
+                                        <p>Seluruh area • 06:30 - 08:00</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="event-item" style="background: #faf5ff;">
+                                    <div class="event-date" style="background: var(--primary-purple);">
+                                        <div class="event-date-day">25</div>
+                                        <div class="event-date-month">Des</div>
+                                    </div>
+                                    <div class="event-info">
+                                        <h4>Evaluasi Program Adiwiyata</h4>
+                                        <p>Aula sekolah • 13:00 - 15:00</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button onclick="addEvent()" class="btn btn-green" style="width: 100%; margin-top: 1.5rem;">
+                                <i class="fas fa-plus"></i> Tambah Kegiatan Baru
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalImageTitle">Gambar</h3>
+                <button onclick="closeImageModal()" class="btn modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <img id="modalImage" src="/placeholder.svg" alt="" style="width: 100%; border-radius: var(--border-radius); margin-bottom: 1.5rem;">
+            <div class="text-center">
+                <button onclick="downloadImage()" class="btn btn-green" style="margin-right: 1rem;">
+                    <i class="fas fa-download"></i> Download
+                </button>
+                <button onclick="shareImage()" class="btn btn-blue">
+                    <i class="fas fa-share"></i> Share
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Achievement Modal -->
+    <div id="achievementModal" class="modal">
+        <div class="modal-content">
+            <div class="text-center">
+                <i id="achievementIcon" class="fas fa-trophy" style="font-size: 4rem; color: var(--gold); margin-bottom: 1.5rem;"></i>
+                <h3 id="achievementTitle" style="color: var(--primary-green); margin-bottom: 1rem;">Pencapaian</h3>
+                <p id="achievementDescription" style="margin-bottom: 2rem; line-height: 1.6;">Deskripsi pencapaian</p>
+                <button onclick="closeAchievementModal()" class="btn btn-green">
+                    <i class="fas fa-check"></i> Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global Variables
+        let isLoggedIn = false;
+        let currentUser = 'admin';
+        let isDarkMode = false;
+        let currentChart = null;
+        let currentChartType = 'bar';
+        
+        // Data Variables for SMA Negeri 19 Palembang
+        let jumlahPohon = 125;
+        let jumlahSampah = 68;
+        let jumlahKegiatan = 24;
+        let skorLingkungan = 92;
+        let hematEnergi = 15;
+        
+        // Task Management
+        let tasks = [
+            { id: 1, text: 'Menyiram tanaman di taman SMA Negeri 19', completed: false, priority: 'high', date: '2024-12-15' },
+            { id: 2, text: 'Mengumpulkan sampah plastik untuk bank sampah', completed: true, priority: 'medium', date: '2024-12-10' },
+            { id: 3, text: 'Membuat kompos dari sampah organik kantin', completed: false, priority: 'low', date: '2024-12-20' },
+            { id: 4, text: 'Membersihkan area parkir dan halaman sekolah', completed: false, priority: 'high', date: '2024-12-18' },
+            { id: 5, text: 'Sosialisasi hemat energi ke kelas X', completed: true, priority: 'medium', date: '2024-12-12' }
+        ];
+        
+        // Quiz Data for SMA Negeri 19
+        let quizQuestions = [
+            {
+                question: "Apa yang dimaksud dengan program Adiwiyata?",
+                options: [
+                    "Program untuk meningkatkan prestasi akademik siswa",
+                    "Program sekolah peduli dan berbudaya lingkungan",
+                    "Program peningkatan fasilitas sekolah",
+                    "Program beasiswa untuk siswa berprestasi"
+                ],
+                correct: 1
+            },
+            {
+                question: "Berapa pilar utama dalam program Adiwiyata?",
+                options: ["2 pilar", "3 pilar", "4 pilar", "5 pilar"],
+                correct: 2
+            },
+            {
+                question: "Apa manfaat utama dari program bank sampah di sekolah?",
+                options: [
+                    "Mengurangi biaya operasional sekolah",
+                    "Mengurangi pencemaran lingkungan dan menghasilkan income",
+                    "Meningkatkan prestasi siswa",
+                    "Mempercantik tampilan sekolah"
+                ],
+                correct: 1
+            },
+            {
+                question: "SMA Negeri 19 Palembang telah meraih status Adiwiyata pada tingkat apa?",
+                options: [
+                    "Adiwiyata Sekolah",
+                    "Adiwiyata Kota",
+                    "Adiwiyata Provinsi", 
+                    "Adiwiyata Mandiri"
+                ],
+                correct: 3
+            },
+            {
+                question: "Apa tujuan utama dari penanaman pohon di lingkungan sekolah?",
+                options: [
+                    "Mempercantik halaman sekolah saja",
+                    "Menyediakan oksigen, mengurangi polusi, dan menciptakan iklim mikro",
+                    "Menghemat biaya listrik",
+                    "Menarik perhatian pengunjung"
+                ],
+                correct: 1
+            }
+        ];
+        
+        let currentQuestionIndex = 0;
+        let quizScore = 0;
+        let selectedAnswer = -1;
+
+        // Login System
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username === 'admin' && password === 'sman19') {
+                isLoggedIn = true;
+                document.getElementById('loginSection').classList.add('hidden');
+                document.getElementById('mainContent').classList.remove('hidden');
+                showNotification('Selamat datang di Dashboard Adiwiyata SMA Negeri 19 Palembang!', 'success');
+                initializeApp();
+            } else {
+                showNotification('Username atau password salah! Gunakan: admin / sman19', 'error');
+            }
+        }
+
+        function logout() {
+            isLoggedIn = false;
+            document.getElementById('mainContent').classList.add('hidden');
+            document.getElementById('loginSection').classList.remove('hidden');
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            showNotification('Logout berhasil. Terima kasih!', 'success');
+        }
+
+        // Initialize App
+        function initializeApp() {
+            initChart();
+            initDashboardChart();
+            renderTasks();
+            renderCalendar();
+            updateStats();
+            loadQuiz();
+        }
+
+        // Notification System
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notificationText');
+            
+            notificationText.textContent = message;
+            notification.className = `notification ${type} show`;
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 4000);
+        }
+
+        // Theme Toggle
+        function toggleTheme() {
+            isDarkMode = !isDarkMode;
+            document.body.classList.toggle('dark-mode');
+            
+            const themeIcon = document.getElementById('themeIcon');
+            themeIcon.className = isDarkMode ? 'fas fa-sun' : 'fas fa-moon';
+            
+            showNotification(`Mode ${isDarkMode ? 'gelap' : 'terang'} diaktifkan`, 'success');
+        }
+
+        // Tab Management
+        function showTab(tabName) {
+            // Hide all tabs
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            // Remove active class from all triggers
+            const triggers = document.querySelectorAll('.tab-trigger');
+            triggers.forEach(trigger => trigger.classList.remove('active'));
+
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Data Management
+        function tambahPohon() {
+            jumlahPohon++;
+            updateDataDisplay();
+            updateChart();
+            updateStats();
+            showNotification('Pohon berhasil ditambahkan ke data SMA Negeri 19!', 'success');
+        }
+
+        function kurangPohon() {
+            if (jumlahPohon > 0) {
+                jumlahPohon--;
+                updateDataDisplay();
+                updateChart();
+                updateStats();
+                showNotification('Data pohon dikurangi', 'warning');
+            }
+        }
+
+        function tambahSampah() {
+            jumlahSampah++;
+            updateDataDisplay();
+            updateChart();
+            updateStats();
+            showNotification('Data sampah daur ulang bertambah!', 'success');
+        }
+
+        function kurangSampah() {
+            if (jumlahSampah > 0) {
+                jumlahSampah--;
+                updateDataDisplay();
+                updateChart();
+                updateStats();
+                showNotification('Data sampah dikurangi', 'warning');
+            }
+        }
+
+        function tambahKegiatan() {
+            jumlahKegiatan++;
+            updateDataDisplay();
+            updateChart();
+            updateStats();
+            showNotification('Kegiatan bersih-bersih berhasil ditambahkan!', 'success');
+        }
+
+        function kurangKegiatan() {
+            if (jumlahKegiatan > 0) {
+                jumlahKegiatan--;
+                updateDataDisplay();
+                updateChart();
+                updateStats();
+                showNotification('Data kegiatan dikurangi', 'warning');
+            }
+        }
+
+        function updateDataDisplay() {
+            document.getElementById('jumlahPohon').textContent = jumlahPohon;
+            document.getElementById('jumlahSampah').textContent = jumlahSampah;
+            document.getElementById('jumlahKegiatan').textContent = jumlahKegiatan;
+        }
+
+        function updateStats() {
+            document.getElementById('statPohon').textContent = jumlahPohon;
+            document.getElementById('statSampah').textContent = jumlahSampah;
+            document.getElementById('statKegiatan').textContent = jumlahKegiatan;
+            document.getElementById('statSkor').textContent = skorLingkungan;
+            
+            // Update progress bars
+            updateProgressBars();
+        }
+
+        function updateProgressBars() {
+            const treeProgress = Math.min((jumlahPohon / 200) * 100, 100);
+            const recycleProgress = Math.min((jumlahSampah / 100) * 100, 100);
+            const cleanProgress = Math.min((jumlahKegiatan / 30) * 100, 100);
+            const energyProgress = Math.min((hematEnergi / 20) * 100, 100);
+            
+            document.getElementById('treeProgressBar').style.width = treeProgress + '%';
+            document.getElementById('recycleProgressBar').style.width = recycleProgress + '%';
+            document.getElementById('cleanProgressBar').style.width = cleanProgress + '%';
+            document.getElementById('energyProgressBar').style.width = energyProgress + '%';
+            
+            document.getElementById('treeProgress').textContent = jumlahPohon;
+            document.getElementById('recycleProgress').textContent = jumlahSampah;
+            document.getElementById('cleanProgress').textContent = jumlahKegiatan;
+            document.getElementById('energyProgress').textContent = hematEnergi;
+        }
+
+        // Chart Management
+        function initChart() {
+            const ctx = document.getElementById('myChart').getContext('2d');
+            currentChart = new Chart(ctx, {
+                type: currentChartType,
+                data: getChartData(),
+                options: getChartOptions()
+            });
+        }
+
+        function initDashboardChart() {
+            const ctx = document.getElementById('dashboardChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
+                    datasets: [
+                        {
+                            label: 'Pohon Ditanam',
+                            data: [8, 15, 22, 35, 48, 62, 75, 88, 95, 105, 115, 125],
+                            borderColor: 'var(--primary-green)',
+                            backgroundColor: 'rgba(5, 150, 105, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        },
+                        {
+                            label: 'Sampah Daur Ulang (kg)',
+                            data: [5, 12, 18, 25, 32, 38, 45, 52, 58, 62, 65, 68],
+                            borderColor: 'var(--primary-orange)',
+                            backgroundColor: 'rgba(249, 115, 22, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        },
+                        {
+                            label: 'Kegiatan Bersih',
+                            data: [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24],
+                            borderColor: 'var(--primary-blue)',
+                            backgroundColor: 'rgba(14, 165, 233, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Progress Tahunan SMA Negeri 19 Palembang',
+                            font: {
+                                size: 16,
+                                weight: 'bold'
+                            }
+                        },
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function getChartData() {
+            return {
+                labels: ['Pohon Ditanam', 'Sampah Daur Ulang (kg)', 'Kegiatan Bersih-bersih'],
+                datasets: [{
+                    label: 'Jumlah',
+                    data: [jumlahPohon, jumlahSampah, jumlahKegiatan],
+                    backgroundColor: [
+                        'var(--primary-green)',
+                        'var(--primary-orange)', 
+                        'var(--primary-blue)'
+                    ],
+                    borderColor: [
+                        'var(--secondary-green)',
+                        '#ea580c',
+                        '#0284c7'
+                    ],
+                    borderWidth: 2,
+                    borderRadius: 8,
+                    borderSkipped: false,
+                }]
+            };
+        }
+
+        function getChartOptions() {
+            return {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Data Adiwiyata SMA Negeri 19 Palembang',
+                        font: {
+                            size: 16,
+                            weight: 'bold'
+                        }
+                    },
+                    legend: {
+                        display: currentChartType !== 'doughnut'
+                    }
+                },
+                scales: currentChartType === 'doughnut' ? {} : {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            };
+        }
+
+        function changeChartType(type) {
+            currentChartType = type;
+            if (currentChart) {
+                currentChart.destroy();
+            }
+            initChart();
+            showNotification(`Chart berubah ke ${type} chart`, 'success');
+        }
+
+        function updateChart() {
+            if (currentChart) {
+                currentChart.data = getChartData();
+                currentChart.update();
+            }
+        }
+
+        function exportData() {
+            const data = {
+                sekolah: "SMA Negeri 19 Palembang",
+                pohon: jumlahPohon,
+                sampah: jumlahSampah,
+                kegiatan: jumlahKegiatan,
+                skor: skorLingkungan,
+                hemat_energi: hematEnergi,
+                tanggal_export: new Date().toISOString(),
+                status: "Adiwiyata Mandiri"
+            };
+            
+            const dataStr = JSON.stringify(data, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'data-adiwiyata-sman19-palembang.json';
+            link.click();
+            
+            showNotification('Data SMA Negeri 19 berhasil diexport!', 'success');
+        }
+
+        // Task Management
+        function addTask() {
+            const taskInput = document.getElementById('newTaskInput');
+            const taskPriority = document.getElementById('taskPriority');
+            
+            if (taskInput.value.trim() === '') {
+                showNotification('Mohon masukkan tugas yang valid', 'error');
+                return;
+            }
+            
+            const newTask = {
+                id: Date.now(),
+                text: taskInput.value.trim(),
+                completed: false,
+                priority: taskPriority.value,
+                date: new Date().toISOString().split('T')[0]
+            };
+            
+            tasks.push(newTask);
+            taskInput.value = '';
+            renderTasks();
+            showNotification('Tugas Adiwiyata berhasil ditambahkan!', 'success');
+        }
+
+        function toggleTask(id) {
+            const task = tasks.find(t => t.id === id);
+            if (task) {
+                task.completed = !task.completed;
+                renderTasks();
+                showNotification(task.completed ? 'Tugas selesai! 🎉' : 'Tugas dibatalkan', 'success');
+            }
+        }
+
+        function deleteTask(id) {
+            tasks = tasks.filter(t => t.id !== id);
+            renderTasks();
+            showNotification('Tugas dihapus', 'warning');
+        }
+
+        function filterTasks(filter) {
+            // Update filter buttons
+            document.querySelectorAll('.task-filter').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            renderTasks(filter);
+        }
+
+        function renderTasks(filter = 'all') {
+            const taskList = document.getElementById('taskList');
+            let filteredTasks = tasks;
+            
+            switch(filter) {
+                case 'pending':
+                    filteredTasks = tasks.filter(t => !t.completed);
+                    break;
+                case 'completed':
+                    filteredTasks = tasks.filter(t => t.completed);
+                    break;
+                case 'high':
+                    filteredTasks = tasks.filter(t => t.priority === 'high');
+                    break;
+            }
+            
+            if (filteredTasks.length === 0) {
+                taskList.innerHTML = `
+                    <div style="text-align: center; padding: 3rem; color: var(--gray-600);">
+                        <i class="fas fa-tasks" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;"></i>
+                        <p>Tidak ada tugas untuk filter ini</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            taskList.innerHTML = filteredTasks.map(task => `
+                <div class="task-item">
+                    <div class="task-checkbox ${task.completed ? 'checked' : ''}" onclick="toggleTask(${task.id})">
+                        ${task.completed ? '<i class="fas fa-check"></i>' : ''}
+                    </div>
+                    <div class="task-text ${task.completed ? 'completed' : ''}">${task.text}</div>
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <span class="task-priority priority-${task.priority}">
+                            ${getPriorityText(task.priority)}
+                        </span>
+                        <button onclick="deleteTask(${task.id})" class="btn btn-red" style="padding: 0.5rem;">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getPriorityText(priority) {
+            switch(priority) {
+                case 'high': return 'Tinggi';
+                case 'medium': return 'Sedang';
+                case 'low': return 'Rendah';
+                default: return 'Normal';
+            }
+        }
+
+        // Quiz System
+        function loadQuiz() {
+            currentQuestionIndex = 0;
+            quizScore = 0;
+            selectedAnswer = -1;
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const question = quizQuestions[currentQuestionIndex];
+            document.getElementById('questionText').textContent = question.question;
+            
+            const optionsContainer = document.getElementById('quizOptions');
+            optionsContainer.innerHTML = question.options.map((option, index) => `
+                <div class="quiz-option" onclick="selectAnswer(${index})">
+                    ${String.fromCharCode(65 + index)}. ${option}
+                </div>
+            `).join('');
+            
+            document.getElementById('submitBtn').disabled = true;
+            document.getElementById('nextBtn').classList.add('hidden');
+            document.getElementById('quizResult').classList.add('hidden');
+        }
+
+        function selectAnswer(index) {
+            selectedAnswer = index;
+            
+            // Remove previous selections
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Add selection to clicked option
+            event.target.classList.add('selected');
+            document.getElementById('submitBtn').disabled = false;
+        }
+
+        function submitAnswer() {
+            const question = quizQuestions[currentQuestionIndex];
+            const isCorrect = selectedAnswer === question.correct;
+            
+            if (isCorrect) {
+                quizScore += 20;
+            }
+            
+            // Show correct/incorrect styling
+            document.querySelectorAll('.quiz-option').forEach((option, index) => {
+                if (index === question.correct) {
+                    option.classList.add('correct');
+                } else if (index === selectedAnswer && !isCorrect) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            // Show result
+            const resultDiv = document.getElementById('quizResult');
+            resultDiv.innerHTML = `
+                <div style="background: ${isCorrect ? '#dcfce7' : '#fef2f2'}; color: ${isCorrect ? '#064e3b' : '#dc2626'};">
+                    <i class="fas ${isCorrect ? 'fa-check-circle' : 'fa-times-circle'}"></i>
+                    ${isCorrect ? 'Benar! 🎉' : 'Salah! 😔'} 
+                    ${isCorrect ? '' : `Jawaban yang benar adalah: ${String.fromCharCode(65 + question.correct)}`}
+                </div>
+            `;
+            resultDiv.classList.remove('hidden');
+            
+            document.getElementById('submitBtn').classList.add('hidden');
+            document.getElementById('nextBtn').classList.remove('hidden');
+            document.getElementById('quizScore').textContent = quizScore;
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            
+            if (currentQuestionIndex >= quizQuestions.length) {
+                showQuizComplete();
+            } else {
+                showQuestion();
+            }
+        }
+
+        function showQuizComplete() {
+            document.getElementById('quizContent').classList.add('hidden');
+            document.getElementById('quizComplete').classList.remove('hidden');
+            document.getElementById('finalScore').textContent = quizScore;
+            
+            let message = '';
+            if (quizScore >= 80) {
+                message = 'Excellent! Anda sangat memahami program Adiwiyata! 🏆';
+            } else if (quizScore >= 60) {
+                message = 'Good job! Pengetahuan Anda tentang Adiwiyata cukup baik! 👍';
+            } else {
+                message = 'Keep learning! Mari pelajari lebih lanjut tentang Adiwiyata! 📚';
+            }
+            
+            showNotification(`Kuis selesai! Skor: ${quizScore}/100. ${message}`, 'success');
+        }
+
+        function restartQuiz() {
+            document.getElementById('quizContent').classList.remove('hidden');
+            document.getElementById('quizComplete').classList.add('hidden');
+            loadQuiz();
+        }
+
+        // Gallery Management
+        function handleFileUpload(event) {
+            const files = event.target.files;
+            const galleryGrid = document.getElementById('galleryGrid');
+            
+            Array.from(files).forEach(file => {
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const galleryItem = document.createElement('div');
+                        galleryItem.className = 'gallery-item';
+                        galleryItem.onclick = () => openImageModal(e.target.result, file.name);
+                        
+                        galleryItem.innerHTML = `
+                            <img src="${e.target.result}" alt="${file.name}">
+                            <div class="gallery-overlay">
+                                <div class="gallery-text">
+                                    <i class="fas fa-search-plus" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                                    <div class="font-semibold">${file.name}</div>
+                                </div>
+                            </div>
+                        `;
+                        
+                        galleryGrid.appendChild(galleryItem);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            showNotification(`${files.length} foto kegiatan SMA Negeri 19 berhasil diupload!`, 'success');
+        }
+
+        function openImageModal(src, title) {
+            document.getElementById('modalImage').src = src;
+            document.getElementById('modalImageTitle').textContent = title;
+            document.getElementById('imageModal').classList.add('show');
+        }
+
+        function closeImageModal() {
+            document.getElementById('imageModal').classList.remove('show');
+        }
+
+        function downloadImage() {
+            const img = document.getElementById('modalImage');
+            const link = document.createElement('a');
+            link.href = img.src;
+            link.download = document.getElementById('modalImageTitle').textContent;
+            link.click();
+            showNotification('Gambar berhasil didownload!', 'success');
+        }
+
+        function shareImage() {
+            if (navigator.share) {
+                navigator.share({
+                    title: document.getElementById('modalImageTitle').textContent,
+                    text: 'Kegiatan Adiwiyata SMA Negeri 19 Palembang',
+                    url: document.getElementById('modalImage').src
+                });
+            } else {
+                // Fallback: copy to clipboard
+                navigator.clipboard.writeText(document.getElementById('modalImage').src);
+                showNotification('Link gambar disalin ke clipboard!', 'success');
+            }
+        }
+
+        // Achievement System
+        function showAchievement(type) {
+            const achievements = {
+                'tree-master': {
+                    icon: 'fas fa-tree',
+                    title: 'Tree Master SMA Negeri 19',
+                    description: 'Selamat! SMA Negeri 19 Palembang telah menanam lebih dari 125 pohon! Kontribusi luar biasa untuk lingkungan Palembang.'
+                },
+                'eco-champion': {
+                    icon: 'fas fa-recycle',
+                    title: 'Eco Champion Palembang',
+                    description: 'Hebat! Sekolah telah mendaur ulang lebih dari 68kg sampah! Terus jaga lingkungan Sumatera Selatan.'
+                },
+                'green-school': {
+                    icon: 'fas fa-school',
+                    title: 'Green School Mandiri',
+                    description: 'SMA Negeri 19 Palembang telah meraih status Adiwiyata Mandiri! Sekolah percontohan lingkungan.'
+                },
+                'eco-legend': {
+                    icon: 'fas fa-crown',
+                    title: 'Eco Legend',
+                    description: 'Raih skor Adiwiyata 100 dan selesaikan 50 kegiatan untuk membuka pencapaian legendaris ini.'
+                }
+            };
+            
+            const achievement = achievements[type];
+            document.getElementById('achievementIcon').className = achievement.icon;
+            document.getElementById('achievementTitle').textContent = achievement.title;
+            document.getElementById('achievementDescription').textContent = achievement.description;
+            document.getElementById('achievementModal').classList.add('show');
+        }
+
+        function closeAchievementModal() {
+            document.getElementById('achievementModal').classList.remove('show');
+        }
+
+        // Calendar System
+        function renderCalendar() {
+            const now = new Date();
+            const currentMonth = now.getMonth();
+            const currentYear = now.getFullYear();
+            
+            document.getElementById('currentMonth').textContent = 
+                new Intl.DateTimeFormat('id-ID', { month: 'long', year: 'numeric' }).format(now);
+            
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+            
+            const calendarDays = document.getElementById('calendarDays');
+            calendarDays.innerHTML = '';
+            
+            // Empty cells for days before month starts
+            for (let i = 0; i < firstDay; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.className = 'calendar-day';
+                calendarDays.appendChild(emptyDay);
+            }
+            
+            // Days of the month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                dayElement.textContent = day;
+                
+                // Mark today
+                if (day === now.getDate()) {
+                    dayElement.classList.add('today');
+                }
+                
+                // Mark event days for SMA Negeri 19
+                if ([15, 18, 22, 25].includes(day)) {
+                    dayElement.classList.add('event');
+                }
+                
+                calendarDays.appendChild(dayElement);
+            }
+        }
+
+        function changeMonth(direction) {
+            showNotification(`Navigasi kalender ${direction > 0 ? 'bulan depan' : 'bulan lalu'}`, 'success');
+        }
+
+        function addEvent() {
+            showNotification('Fitur tambah kegiatan baru akan segera tersedia!', 'success');
+        }
+
+        // Leaderboard
+        function sortLeaderboard(criteria) {
+            let message = '';
+            switch(criteria) {
+                case 'points':
+                    message = 'Leaderboard diurutkan berdasarkan total poin';
+                    break;
+                case 'trees':
+                    message = 'Leaderboard diurutkan berdasarkan jumlah pohon';
+                    break;
+                case 'activities':
+                    message = 'Leaderboard diurutkan berdasarkan jumlah kegiatan';
+                    break;
+            }
+            showNotification(message, 'success');
+        }
+
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Drag and Drop for Upload
+            const uploadArea = document.querySelector('.upload-area');
+            
+            if (uploadArea) {
+                uploadArea.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    this.classList.add('dragover');
+                });
+                
+                uploadArea.addEventListener('dragleave', function(e) {
+                    e.preventDefault();
+                    this.classList.remove('dragover');
+                });
+                
+                uploadArea.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    this.classList.remove('dragover');
+                    
+                    const files = e.dataTransfer.files;
+                    document.getElementById('fileInput').files = files;
+                    handleFileUpload({ target: { files } });
+                });
+            }
+            
+            // Enter key support for login
+            document.getElementById('username').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') login();
+            });
+            
+            document.getElementById('password').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') login();
+            });
+            
+            // Enter key for new task
+            const taskInput = document.getElementById('newTaskInput');
+            if (taskInput) {
+                taskInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') addTask();
+                });
+            }
+        });
+
+        // Close modals when clicking outside
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal')) {
+                e.target.classList.remove('show');
+            }
+        });
+
+        // Auto-update weather (simulation)
+        setInterval(function() {
+            const temps = [30, 31, 32, 33, 29, 28];
+            const weathers = ['Cerah', 'Berawan', 'Cerah Berawan'];
+            const icons = ['fa-sun', 'fa-cloud-sun', 'fa-cloud'];
+            
+            const randomTemp = temps[Math.floor(Math.random() * temps.length)];
+            const randomWeather = weathers[Math.floor(Math.random() * weathers.length)];
+            const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+            
+            const weatherWidget = document.querySelector('.weather-widget');
+            if (weatherWidget) {
+                weatherWidget.innerHTML = `
+                    <i class="fas ${randomIcon} weather-icon"></i>
+                    <div>
+                        <div class="font-bold">${randomTemp}°C</div>
+                        <div class="text-sm">${randomWeather}</div>
+                    </div>
+                `;
+            }
+        }, 30000); // Update every 30 seconds
+
+        // Initialize default data on page load
+        window.addEventListener('load', function() {
+            updateDataDisplay();
+            updateStats();
+        });
+    </script>
+</body>
+</html>
