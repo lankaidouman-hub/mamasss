@@ -1,0 +1,125 @@
+:root {
+    --bg-color: #f7f7f7;
+    --text-color: #535353;
+    --dino-color: #535353;
+    --ground-color: #535353;
+}
+
+body.dark-mode {
+    --bg-color: #202124;
+    --text-color: #acacac;
+    --dino-color: #acacac;
+    --ground-color: #757575;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+body {
+    font-family: 'Courier New', monospace;
+    background: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+header h1 {
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+}
+
+#game-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    height: 250px;
+    border-bottom: 2px solid var(--ground-color);
+    overflow: hidden;
+}
+
+#world {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    bottom: 0;
+}
+
+#dino {
+    position: absolute;
+    width: 40px;
+    height: 43px;
+    left: 50px;
+    bottom: 0;
+}
+
+.dino-svg {
+    width: 100%;
+    height: 100%;
+    fill: var(--dino-color);
+}
+
+.obstacle {
+    position: absolute;
+    bottom: 0;
+    background: var(--dino-color);
+    clip-path: polygon(20% 0%,80% 0%,100% 20%,100% 100%,0% 100%,0% 20%);
+}
+
+.cloud {
+    position: absolute;
+    background: var(--dino-color);
+    opacity: 0.5;
+    border-radius: 10px;
+}
+
+#score-board {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-weight: bold;
+}
+
+#game-message {
+    position: absolute;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: rgba(255,255,255,0.85);
+}
+
+body.dark-mode #game-message {
+    background: rgba(48,48,48,0.9);
+    color: #fff;
+}
+
+.restart-icon {
+    width: 36px;
+    cursor: pointer;
+}
+
+#controls-info {
+    margin-top: 20px;
+    font-size: 14px;
+    opacity: 0.7;
+}
+
+.dino-running .dino-leg-left {
+    animation: run 0.2s infinite alternate;
+}
+.dino-running .dino-leg-right {
+    animation: run 0.2s infinite alternate-reverse;
+}
+
+@keyframes run {
+    from { transform: rotate(15deg); }
+    to { transform: rotate(-15deg); }
+}
