@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program Adiwiyata - SMA Negeri 19 Palembang</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark Mode">
+        <i class="fas fa-moon" id="themeIcon"></i>
+    </button>
+
+    <!-- Notification -->
+    <div id="notification" class="notification">
+        <div class="notification-content">
+            <i class="fas fa-check-circle"></i>
+            <span id="notificationText">Notifikasi</span>
+        </div>
+    </div>
+
+    <!-- Login Section -->
+    <div id="loginSection" class="login-container">
+        <div class="login-card animate-fadeIn">
+            <div class="school-logo animate-bounce">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            
+            <h1 class="login-title">Program Adiwiyata</h1>
+            <p class="login-subtitle">SMA Negeri 19 Palembang</p>
+            
+            <div class="school-info">
+                <div class="font-semibold mb-1">🏫 Sekolah Adiwiyata Mandiri</div>
+                <div class="text-sm">Jl.Gubernur H. Ahmad Bastari Palembang</div>
+            </div>
+            
+            <form id="loginForm" onsubmit="handleLoginForm(event)">
+                <div class="form-group">
+                    <label class="form-label" for="username">Username</label>
+                    <input type="text" id="username" class="form-input" placeholder="Masukkan username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <input type="password" id="password" class="form-input" placeholder="Masukkan password" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Masuk ke Dashboard
+                </button>
+            </form>
+            
+            <div id="loginError" class="error-message hidden"></div>
+            
+            <div class="text-center mt-4 text-sm" style="color: var(--gray-600);">
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent" class="hidden">
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <div class="header-content">
+                    <div class="header-left">
+                        <div class="header-logo">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <div class="header-info">
+                            <h1>Program Adiwiyata</h1>
+                            <p>SMA Negeri 19 Palembang</p>
+                        </div>
+                    </div>
+                    
+                    <div class="weather-widget">
+                        <i class="fas fa-sun weather-icon"></i>
+                        <div>
+                            <div class="font-bold">32°C</div>
+                            <div class="text-sm">Cerah Berawan</div>
+                        </div>
+                    </div>
+                    
+                    <button onclick="logout()" class="btn btn-outline">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="container">
+            <!-- Stats Overview -->
+            <div class="stats-overview animate-fadeIn">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div>
+                            <div class="stat-title">Total Pohon Ditanam</div>
+                            <div class="stat-value" id="statPohon">125</div>
+                            <div class="stat-trend">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+15% bulan ini</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-tree stat-icon" style="color: var(--primary-green);"></i>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div>
+                            <div class="stat-title">Sampah Daur Ulang (kg)</div>
+                            <div class="stat-value" id="statSampah" style="color: var(--primary-orange);">68</div>
+                            <div class="stat-trend" style="color: var(--primary-orange);">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+12% bulan ini</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-recycle stat-icon" style="color: var(--primary-orange);"></i>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div>
+                            <div class="stat-title">Kegiatan Selesai</div>
+                            <div class="stat-value" id="statKegiatan" style="color: var(--primary-blue);">24</div>
+                            <div class="stat-trend" style="color: var(--primary-blue);">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+20% bulan ini</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-tasks stat-icon" style="color: var(--primary-blue);"></i>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div>
+                            <div class="stat-title">Skor Adiwiyata</div>
+                            <div class="stat-value" id="statSkor" style="color: var(--primary-purple);">92</div>
+                            <div class="stat-trend" style="color: var(--primary-purple);">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+8% bulan ini</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-medal stat-icon" style="color: var(--primary-purple);"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enhanced Tabs -->
+            <div class="tabs-container">
+                <div class="tabs-list">
+                    <button class="tab-trigger active" onclick="showTab('dashboard')">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </button>
+                    <button class="tab-trigger" onclick="showTab('tentang')">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Tentang</span>
+                    </button>
+                    <button class="tab-trigger" onclick="showTab('galeri')">
+                        <i class="fas fa-images"></i>
+                        <span>Galeri</span>
+                    </button>
+                    <button class="tab-trigger" onclick="showTab('data')">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Data</span>
+                    </button>
+
+                    <button class="tab-trigger" onclick="showTab('calendar')">
+                        <i class="fas fa-calendar"></i>
+                        <span>Kalender</span>
+                    </button>
+                </div>
+
+                <!-- Dashboard Tab -->
+                <div id="dashboard" class="tab-content active">
+                    <div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                        <div class="card">
+                            <div class="card-header purple">
+                                <h2 class="card-title">
+                                    <i class="fas fa-chart-area"></i>
+                                    Progress Lingkungan SMA Negeri 19
+                                </h2>
+                                <p class="card-description">Visualisasi data kegiatan Adiwiyata real-time</p>
+                            </div>
+                            <div class="card-content">
+                                <div style="height: 300px;">
+                                    <canvas id="dashboardChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header gold">
+                                <h2 class="card-title">
+                                    <i class="fas fa-award"></i>
+                                    Pencapaian Terbaru
+                                </h2>
+                                <p class="card-description">Badge dan prestasi lingkungan</p>
+                            </div>
+                            <div class="card-content">
+                                <div class="achievement-grid">
+                                    <div class="achievement-badge unlocked" onclick="showAchievement('tree-master')">
+                                        <i class="fas fa-tree achievement-icon"></i>
+                                        <div class="achievement-title">Tree Master</div>
+                                    </div>
+                                    <div class="achievement-badge unlocked" onclick="showAchievement('eco-champion')">
+                                        <i class="fas fa-recycle achievement-icon"></i>
+                                        <div class="achievement-title">Eco Champion</div>
+                                    </div>
+                                    <div class="achievement-badge unlocked" onclick="showAchievement('green-school')">
+                                        <i class="fas fa-school achievement-icon"></i>
+                                        <div class="achievement-title">Green School</div>
+                                    </div>
+                                    <div class="achievement-badge" onclick="showAchievement('eco-legend')">
+                                        <i class="fas fa-crown achievement-icon"></i>
+                                        <div class="achievement-title">Eco Legend</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Progress Tracking -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-bullseye"></i>
+                                Target Semester Genap 2026
+                            </h2>
+                            <p class="card-description">Progress menuju target lingkungan SMA Negeri 19 Palembang</p>
+                        </div>
+                        <div class="card-content">
+                            <div class="progress-grid">
+                                <div class="progress-container">
+                                    <div class="progress-label">
+                                        <span><i class="fas fa-tree"></i> Penanaman Pohon</span>
+                                        <span><span id="treeProgress">125</span>/200 pohon</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" id="treeProgressBar" style="width: 62.5%;"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="progress-container">
+                                    <div class="progress-label">
+                                        <span><i class="fas fa-recycle"></i> Daur Ulang Sampah</span>
+                                        <span><span id="recycleProgress">68</span>/100 kg</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" id="recycleProgressBar" style="width: 68%;"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="progress-container">
+                                    <div class="progress-label">
+                                        <span><i class="fas fa-broom"></i> Kegiatan Bersih-Bersih</span>
+                                        <span><span id="cleanProgress">24</span>/30 kegiatan</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" id="cleanProgressBar" style="width: 80%;"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="progress-container">
+                                    <div class="progress-label">
+                                        <span><i class="fas fa-lightbulb"></i> Hemat Energi</span>
+                                        <span><span id="energyProgress">15</span>/20%</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" id="energyProgressBar" style="width: 75%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- About Tab -->
+                <div id="tentang" class="tab-content">
+                    <div class="card animate-slideIn">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-school"></i>
+                                SMA Negeri 19 Palembang - Sekolah Adiwiyata
+                            </h2>
+                            <p class="card-description">Sekolah Peduli dan Berbudaya Lingkungan</p>
+                        </div>
+                        <div class="card-content">
+                            <div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                                <div>
+                                    <p class="mb-4">
+                                        SMA Negeri 19 Palembang telah meraih status <strong>Sekolah Adiwiyata Mandiri</strong> sejak tahun 2025. 
+                                        Sekolah kami berkomitmen penuh dalam mengimplementasikan program Adiwiyata yang bertujuan mewujudkan 
+                                        sekolah yang peduli dan berbudaya lingkungan hidup.
+                                    </p>
+                                    
+                                    <p class="mb-4">
+                                        Dengan motto <em>"Berprestasi, Berkarakter, dan Berwawasan Lingkungan"</em>, SMA Negeri 19 Palembang 
+                                        terus mengintegrasikan nilai-nilai lingkungan dalam seluruh aspek pendidikan dan kehidupan sekolah.
+                                    </p>
+                                    
+                                    <div style="background: var(--light-green); padding: 1.5rem; border-radius: var(--border-radius); border-left: 4px solid var(--primary-green);">
+                                        <h4 style="color: var(--dark-green); margin-bottom: 0.5rem;">🎯 Visi Lingkungan</h4>
+                                        <p style="color: var(--dark-green);">Menjadi sekolah unggul yang menghasilkan generasi cerdas, berkarakter, dan peduli lingkungan.</p>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <div style="background: linear-gradient(135deg, var(--light-blue), var(--light-green)); padding: 2rem; border-radius: var(--border-radius); text-align: center;">
+                                        <i class="fas fa-trophy" style="font-size: 3rem; color: var(--gold); margin-bottom: 1rem;"></i>
+                                        <h3 style="color: var(--primary-blue); margin-bottom: 0.5rem;">Status Sekolah</h3>
+                                        <div style="background: var(--primary-green); color: var(--white); padding: 0.75rem 1.5rem; border-radius: 25px; font-weight: 700; margin-bottom: 1rem;">
+                                            Adiwiyata Mandiri
+                                        </div>
+                                        <div class="text-sm" style="color: var(--gray-600);">
+                                            <div>📍 Jl.Gubernur H. Ahmad Bastari Palembang</div>
+                                            <div>🏙️ Palembang, Sumatera Selatan</div>
+                                            <div>📞 0895420976625</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- School Statistics -->
+                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 1.5rem;">
+                                <div style="background: var(--gray-50); padding: 1.5rem; border-radius: var(--border-radius); text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                                    <i class="fas fa-users" style="font-size: 2.5rem; color: var(--primary-blue); margin-bottom: 0.75rem; display: block;"></i>
+                                    <div class="font-bold text-xl">1,250</div>
+                                    <div class="text-sm" style="color: var(--gray-600); margin-top: 0.5rem;">Total Siswa</div>
+                                </div>
+                                <div style="background: var(--gray-50); padding: 1.5rem; border-radius: var(--border-radius); text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                                    <i class="fas fa-chalkboard-teacher" style="font-size: 2.5rem; color: var(--primary-green); margin-bottom: 0.75rem; display: block;"></i>
+                                    <div class="font-bold text-xl">85</div>
+                                    <div class="text-sm" style="color: var(--gray-600); margin-top: 0.5rem;">Guru & Staff</div>
+                                </div>
+                                <div style="background: var(--gray-50); padding: 1.5rem; border-radius: var(--border-radius); text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                                    <i class="fas fa-door-open" style="font-size: 2.5rem; color: var(--primary-orange); margin-bottom: 0.75rem; display: block;"></i>
+                                    <div class="font-bold text-xl">36</div>
+                                    <div class="text-sm" style="color: var(--gray-600); margin-top: 0.5rem;">Ruang Kelas</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 4 Pilar Adiwiyata -->
+                    <div class="card">
+                        <div class="card-header blue">
+                            <h2 class="card-title">
+                                <i class="fas fa-columns"></i>
+                                4 Pilar Adiwiyata SMA Negeri 19 Palembang
+                            </h2>
+                            <p class="card-description">Implementasi komprehensif program Adiwiyata</p>
+                        </div>
+                        <div class="card-content">
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                                <div style="background: var(--gray-50); padding: 2rem; border-radius: var(--border-radius); border-left: 4px solid var(--primary-green);">
+                                    <div style="background: var(--primary-green); color: var(--white); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                                        <i class="fas fa-gavel"></i>
+                                    </div>
+                                    <h4 class="font-semibold mb-2">Kebijakan Berwawasan Lingkungan</h4>
+                                    <p class="text-sm" style="color: var(--gray-600);">Mengembangkan kebijakan sekolah yang mendukung kegiatan ramah lingkungan dan pembangunan berkelanjutan di SMA Negeri 19 Palembang.</p>
+                                </div>
+                                
+                                <div style="background: var(--gray-50); padding: 2rem; border-radius: var(--border-radius); border-left: 4px solid var(--primary-blue);">
+                                    <div style="background: var(--primary-blue); color: var(--white); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                                        <i class="fas fa-book-open"></i>
+                                    </div>
+                                    <h4 class="font-semibold mb-2">Kurikulum Berbasis Lingkungan</h4>
+                                    <p class="text-sm" style="color: var(--gray-600);">Mengintegrasikan materi lingkungan hidup ke dalam kurikulum dan proses pembelajaran di semua mata pelajaran.</p>
+                                </div>
+                                
+                                <div style="background: var(--gray-50); padding: 2rem; border-radius: var(--border-radius); border-left: 4px solid var(--primary-orange);">
+                                    <div style="background: var(--primary-orange); color: var(--white); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    <h4 class="font-semibold mb-2">Kegiatan Partisipatif</h4>
+                                    <p class="text-sm" style="color: var(--gray-600);">Melibatkan seluruh warga sekolah dalam kegiatan lingkungan yang kreatif, inovatif, dan berkelanjutan.</p>
+                                </div>
+                                
+                                <div style="background: var(--gray-50); padding: 2rem; border-radius: var(--border-radius); border-left: 4px solid var(--primary-purple);">
+                                    <div style="background: var(--primary-purple); color: var(--white); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                                        <i class="fas fa-building"></i>
+                                    </div>
+                                    <h4 class="font-semibold mb-2">Sarana Ramah Lingkungan</h4>
+                                    <p class="text-sm" style="color: var(--gray-600);">Mengelola sarana dan prasarana sekolah yang mendukung kegiatan ramah lingkungan dan hemat energi.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery Tab -->
+                <div id="galeri" class="tab-content">
+                    <div class="card">
+                        <div class="card-header purple">
+                            <h2 class="card-title">
+                                <i class="fas fa-camera"></i>
+                                Galeri Kegiatan Adiwiyata SMA Negeri 19
+                            </h2>
+                            <p class="card-description">Dokumentasi kegiatan lingkungan dan prestasi sekolah</p>
+                        </div>
+                        <div class="card-content">
+                            <div style="background-color: var(--primary-green); color: white; padding: 1rem; border-radius: var(--border-radius); margin-bottom: 1.5rem;">
+                                <p style="margin: 0;"><strong>Foto 📷 :</strong></p>
+                                
+                            </div>
+                            
+                            <!-- Gallery Grid -->
+                            <div id="galleryGrid" class="gallery-grid"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Tab -->
+                <div id="data" class="tab-content">
+                    <div class="data-grid">
+                        <div class="card data-card">
+                            <div class="card-header" style="background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));">
+                                <h3 class="card-title">
+                                    <i class="fas fa-tree"></i>
+                                    Pohon Ditanam
+                                </h3>
+                                <p class="card-description">Total penanaman di area sekolah</p>
+                            </div>
+                            <div class="card-content">
+                                <div class="data-value green" id="jumlahPohon">125</div>
+                                <p class="data-description">Pohon telah ditanam di SMA Negeri 19</p>
+                                <div class="data-controls">
+                                    <button onclick="tambahPohon()" class="btn btn-data btn-green">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                    <button onclick="kurangPohon()" class="btn btn-data btn-red">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                                <div class="data-info">
+                                    <i class="fas fa-calendar-alt"></i> Target semester: 200 pohon
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card data-card">
+                            <div class="card-header orange">
+                                <h3 class="card-title">
+                                    <i class="fas fa-recycle"></i>
+                                    Sampah Daur Ulang
+                                </h3>
+                                <p class="card-description">Program bank sampah sekolah</p>
+                            </div>
+                            <div class="card-content">
+                                <div class="data-value orange" id="jumlahSampah">68</div>
+                                <p class="data-description">Kilogram sampah berhasil didaur ulang</p>
+                                <div class="data-controls">
+                                    <button onclick="tambahSampah()" class="btn btn-data btn-orange">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                    <button onclick="kurangSampah()" class="btn btn-data btn-red">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                                <div class="data-info">
+                                    <i class="fas fa-calendar-alt"></i> Target semester: 100 kg
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card data-card">
+                            <div class="card-header blue">
+                                <h3 class="card-title">
+                                    <i class="fas fa-broom"></i>
+                                    Kegiatan Bersih
+                                </h3>
+                                <p class="card-description">Aksi bersih-bersih lingkungan</p>
+                            </div>
+                            <div class="card-content">
+                                <div class="data-value blue" id="jumlahKegiatan">24</div>
+                                <p class="data-description">Kegiatan bersih-bersih telah dilakukan</p>
+                                <div class="data-controls">
+                                    <button onclick="tambahKegiatan()" class="btn btn-data btn-blue">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                    <button onclick="kurangKegiatan()" class="btn btn-data btn-red">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                                <div class="data-info">
+                                    <i class="fas fa-calendar-alt"></i> Target semester: 30 kegiatan
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Chart Section -->
+                    <div class="card">
+                        <div class="card-header purple">
+                            <h2 class="card-title">
+                                <i class="fas fa-chart-bar"></i>
+                                Analisis Data Lingkungan SMA Negeri 19
+                            </h2>
+                            <p class="card-description">Visualisasi progress dan tren kegiatan Adiwiyata</p>
+                        </div>
+                        <div class="card-content">
+                            <div style="display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap;">
+                                <button onclick="changeChartType('bar')" class="btn btn-green">
+                                    <i class="fas fa-chart-bar"></i> Bar Chart
+                                </button>
+                                <button onclick="changeChartType('line')" class="btn btn-blue">
+                                    <i class="fas fa-chart-line"></i> Line Chart
+                                </button>
+                                <button onclick="changeChartType('doughnut')" class="btn btn-orange">
+                                    <i class="fas fa-chart-pie"></i> Pie Chart
+                                </button>
+                                <button onclick="exportData()" class="btn" style="background: var(--primary-purple); color: var(--white);">
+                                    <i class="fas fa-download"></i> Export Data
+                                </button>
+                            </div>
+                            <div style="height: 350px;">
+                                <canvas id="myChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Calendar Tab -->
+                <div id="calendar" class="tab-content">
+                    <div class="calendar-container">
+                        <div class="calendar-widget">
+                            <div class="calendar-header">
+                                <button onclick="changeMonth(-1)" class="btn calendar-nav">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <h3 class="calendar-title" id="currentMonth">Desember 2026</h3>
+                                <button onclick="changeMonth(1)" class="btn calendar-nav">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                            
+                            <div class="calendar-grid" id="calendarDays">
+                                <div class="calendar-day-header">Min</div>
+                                <div class="calendar-day-header">Sen</div>
+                                <div class="calendar-day-header">Sel</div>
+                                <div class="calendar-day-header">Rab</div>
+                                <div class="calendar-day-header">Kam</div>
+                                <div class="calendar-day-header">Jum</div>
+                                <div class="calendar-day-header">Sab</div>
+                            </div>
+                        </div>
+                        
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalImageTitle">Gambar</h3>
+                <button onclick="closeImageModal()" class="btn modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <img id="modalImage" src="/placeholder.svg" alt="" style="width: 100%; border-radius: var(--border-radius); margin-bottom: 1.5rem;">
+            <div class="text-center">
+                <button onclick="downloadImage()" class="btn btn-green" style="margin-right: 1rem;">
+                    <i class="fas fa-download"></i> Download
+                </button>
+                <button onclick="shareImage()" class="btn btn-blue">
+                    <i class="fas fa-share"></i> Share
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Achievement Modal -->
+    <div id="achievementModal" class="modal">
+        <div class="modal-content">
+            <div class="text-center">
+                <i id="achievementIcon" class="fas fa-trophy" style="font-size: 4rem; color: var(--gold); margin-bottom: 1.5rem;"></i>
+                <h3 id="achievementTitle" style="color: var(--primary-green); margin-bottom: 1rem;">Pencapaian</h3>
+                <p id="achievementDescription" style="margin-bottom: 2rem; line-height: 1.6;">Deskripsi pencapaian</p>
+                <button onclick="closeAchievementModal()" class="btn btn-green">
+                    <i class="fas fa-check"></i> Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
